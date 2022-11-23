@@ -110,11 +110,11 @@
                                 <div class="row">
                                     <div class="col-6 col-lg-6">
                                         <label class="form-label">Pilih Judul Url</label>
-                                        <select class="form-control" id="judul_web_gugel" name="judul_title_gugel"></select>
+                                        <select class="form-control" id="judul_title" name="judul_title" required></select>
                                     </div>
                                     <div class="col-6 col-lg-6">
                                         <label class="form-label">Url</label>
-                                        <select class="form-control" id="url_web_kebenaran" name="urlpt">
+                                        <select class="form-control" id="url_web_kebenaran" name="urlpt" required>
                                         </select>
                                     </div>
                                 </div>
@@ -123,11 +123,11 @@
                         <div class="row mb-3">
                             <div class="col-12 col-lg-6">
                                 <label for="namapt" class="form-label">Nama Perusaaan</label>
-                                <input type="text" class="form-control" id="namapt" placeholder="Masukan nama perusaaan" name="namapt"/>
+                                <input type="text" class="form-control" id="namapt" placeholder="Masukan nama perusaaan" name="namapt" required/>
                             </div>
                             <div class="col col-lg-6">
                                 <label for="statuspt" class="form-label">Status Lowongan</label>
-                                <select class="form-control statuspt" name="statuspt">
+                                <select class="form-control statuspt" name="statuspt" required>
                                     <option value="">Pilih Status</option>
                                     <option value="Hoax">Hoax</option>
                                     <option value="Real">Terbukti/No Hoax</option>
@@ -135,7 +135,7 @@
                             </div>
                         </div>
                         <label class="form-label">Alamat Perusahaan</label>
-                        <textarea class="alamatpt mb-3" name="alamatpt" required>aa</textarea>
+                        <textarea class="alamatpt mb-3" name="alamatpt" required></textarea>
                         <button type="submit" class="btn btn-primary mt-3">Add</button>
                     </form>
                 </div>
@@ -143,9 +143,15 @@
             <footer class="footer text-center">©Kebenaran
             </footer>
         </div>
+
         @include('layout.keluar')
+        
     </div>
+
+  
+
     @include('layout.footer')
+
 
     <script type="text/javascript" src="{{asset('vendor/ckeditor/ckeditor.js') }}"></script>
 
@@ -155,5 +161,10 @@
         resize:true
     });
     </script>
+    
+
+    <script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}"></script>
+    
+    @include('sweetalert::alert')
 </body>
 </html>

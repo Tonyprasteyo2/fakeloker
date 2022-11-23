@@ -28,15 +28,15 @@
                         <div class="w-full p-5">
                             <h2 class="text-4xl mb-5">Login,</h2>
                             <div id="alert"></div>
-                            <form method="POST" class="login">
+                            <form class="login">
                                 @csrf
                                 <div class="mb-4">
                                     <label class="block text-lg font-bold mb-2" for="username">Email</label>
-                                    <input type="text" name="email" class="email shadow w-full border rounded px-3 appearance-none leading-tight focus:shadow-outline focus:outline-none py-2" placeholder="Masukan Email Anda"/>
+                                    <input type="text" name="email" class="email shadow w-full border rounded px-3 appearance-none leading-tight focus:shadow-outline focus:outline-none py-2" placeholder="Masukan Email Anda" required/>
                                 </div>
                                 <div class="mb-4">
                                     <label class="block text-lg font-bold mb-2">Password</label>
-                                    <input type="text" name="password" class="password shadow w-full border rounded px-3 leading-tight focus:shadow-outline focus:outline-none py-2 appearance-none" placeholder="Masukan Password Anda"/>
+                                    <input type="text" name="password" class="password shadow w-full border rounded px-3 leading-tight focus:shadow-outline focus:outline-none py-2 appearance-none" placeholder="Masukan Password Anda" required/>
                                 </div>
                                 <button type="submit" class="login rounded bg-cyan-500 py-3 w-20 mt-1 text-xl tracking-wide leading-4 text-white">Login</button>
                             </form>
@@ -47,9 +47,9 @@
             </div>
         </div>
     </div>
-    {{-- jquery library --}}
+
     <script src="{{ asset('js/jquery-3.5.1.min.js') }}" type="text/javascript"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.33/dist/sweetalert2.all.min.js"></script>
+    <script src="{{ asset('js/sweetaalert.min.js') }}"></script>
     <script  src="{{ asset('js/style.js') }}"></script>
 </body>
 </html>

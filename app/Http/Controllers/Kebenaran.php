@@ -40,6 +40,8 @@ class Kebenaran extends Controller
             return response()->json(["status" => "gagal"]);
         }
     }
+
+    // logout
     public function Logout()
     {
         session()->regenerate();
@@ -47,17 +49,21 @@ class Kebenaran extends Controller
         Auth::logout();
         return redirect('login');
     }
+
+    // dasboard 
     public function Dasboard(Request $request)
     {
         $title = "Dasboard";
         return view('masterweb.index', compact("title"));
     }
+
+    // profil
     public function Profil(Request $request)
     {
         $title = "Profil";
         $session_id = $request->session()->start();
-        $data = DB::table('useradmins')->select()->join('aktifasis','aktifasis.user_id','=','useradmins.id')->where('user_id',$session_id)->get();
-        return view('masterweb.profil', compact("title","data"));
+        $data = DB::table('useradmins')->select()->join('aktifasis', 'aktifasis.user_id', '=', 'useradmins.id')->where('user_id', $session_id)->get();
+        return view('masterweb.profil', compact("title", "data"));
     }
 
     // update user admin
@@ -106,20 +112,20 @@ class Kebenaran extends Controller
     public function UserData(Request $request)
     {
         $title = "Data User";
-        $data = DB::table('useradmins')->select()->join('aktifasis','aktifasis.user_id','=','useradmins.id')->get();
-        return view("masterweb.user",compact("title","data"));
+        $data = DB::table('useradmins')->select()->join('aktifasis', 'aktifasis.user_id', '=', 'useradmins.id')->get();
+        return view("masterweb.user", compact("title", "data"));
     }
 
     // delete user member
     public function DeleteUser(Request $request)
     {
         $id = $request->input('id');
-        $hapus = DB::table('aktifasis')->leftJoin("useradmins","aktifasis.user_id","=","useradmins.id")->where("user_id",$id);
-        DB::table('useradmins')->where("id",$id)->delete();
+        $hapus = DB::table('aktifasis')->leftJoin("useradmins", "aktifasis.user_id", "=", "useradmins.id")->where("user_id", $id);
+        DB::table('useradmins')->where("id", $id)->delete();
         $hapus->delete();
         return response()->json([
-            "status"=>200,
-            "title"=>"Berhasil Hapus User"
+            "status" => 200,
+            "title" => "Berhasil Hapus User"
         ]);
     }
 
@@ -127,83 +133,83 @@ class Kebenaran extends Controller
     public function ViewUser(Request $request)
     {
         $update = htmlspecialchars($request->input('id'));
-        $view = DB::table('useradmins')->where('id',$update)->get();
+        $view = DB::table('useradmins')->where('id', $update)->get();
         return json_encode($view);
     }
 
     // update user member
     public function UpdateMember(Request $request)
-    {   
-        $this->validate($request,[
-            "view_pass"=>"required",
-            "view_level"=>"required"
+    {
+        $this->validate($request, [
+            "view_pass" => "required",
+            "view_level" => "required"
         ]);
         $id = $request->input('id_member');
         $namaMember = htmlspecialchars($request->input('nama_member'));
         $emailMember = $request->input('view_email');
         $passwordMember = $request->input('view_pass');
         $roleMember = $request->input('view_level');
-        if (filter_var($emailMember,FILTER_VALIDATE_EMAIL)) {
-            $update = DB::table('useradmins')->where('id',$id)->update([
+        if (filter_var($emailMember, FILTER_VALIDATE_EMAIL)) {
+            $update = DB::table('useradmins')->where('id', $id)->update([
                 "nama_lengkap" => $namaMember,
-                "email"=>$emailMember,
-                "password"=>Hash::make($passwordMember),
-                "role"=>$roleMember,
+                "email" => $emailMember,
+                "password" => Hash::make($passwordMember),
+                "role" => $roleMember,
             ]);
-             $dataEmail = [
-                 "email"=>$emailMember,
-                 "password"=>$passwordMember,
-             ];
+            $dataEmail = [
+                "email" => $emailMember,
+                "password" => $passwordMember,
+            ];
             Mail::to($emailMember)->send(new SendMail($dataEmail));
             return response()->json([
-                "status"=>200,
-                "title"=>"Sukses",
-                "text"=>"Berhasil Update User"
+                "status" => 200,
+                "title" => "Sukses",
+                "text" => "Berhasil Update User"
             ]);
-        }else {
+        } else {
             return response()->json([
-                "status"=>300,
-                "title"=>"Gagal",
-                "text"=>"Silakan Coba Kembali"
+                "status" => 300,
+                "title" => "Gagal",
+                "text" => "Silakan Coba Kembali"
             ]);
         }
     }
     public function Informasi()
     {
         $title = "Add Informasi";
-        return view('masterweb.add',compact("title"));
+        return view('masterweb.add', compact("title"));
     }
 
-    // add user member
+    // add user 
     public function AddUserNew(Request $request)
     {
-        $this->validate($request,[
-            "namanew"=>"required",
-            "pasnew"=>"required"
+        $this->validate($request, [
+            "namanew" => "required",
+            "pasnew" => "required"
         ]);
         $namauserbaru = htmlspecialchars($request->input('namanew'));
         $emailuserbaru = $request->input('emailnew');
         $passwordusernew = htmlspecialchars($request->input('pasnew'));
         $roleusernew = $request->input('role_member');
-        if (filter_var($emailuserbaru,FILTER_VALIDATE_EMAIL)) {
-            if (preg_match("/(?=.*[a-zA-Z])(?=.*[0-9])/",$passwordusernew)) {
+        if (filter_var($emailuserbaru, FILTER_VALIDATE_EMAIL)) {
+            if (preg_match("/(?=.*[a-zA-Z])(?=.*[0-9])/", $passwordusernew)) {
                 $addusernew = DB::table('useradmins')->insert([
                     "nama_lengkap" => $namauserbaru,
-                    "email"=>$emailuserbaru,
-                    "password"=>Hash::make($passwordusernew),
+                    "email" => $emailuserbaru,
+                    "password" => Hash::make($passwordusernew),
                     "role" => $roleusernew,
-                    "foto"=>"user.png"
+                    "foto" => "user.png"
                 ]);
                 return response()->json([
-                    "status" =>200,
-                    "title"=>"Berhasil",
-                    "text"=>"Sukses Buat Akun"
+                    "status" => 200,
+                    "title" => "Berhasil",
+                    "text" => "Sukses Buat Akun"
                 ]);
             }
         }
     }
 
-    // get search alamat iin google
+    // get search alamat in google
     public function curl(Request $request)
     {
         $search = htmlentities($request->input('gugel'));
@@ -217,7 +223,7 @@ class Kebenaran extends Controller
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS =>'{"q":"'.$search.'","gl":"id","hl":"id","autocorrect":true}',
+            CURLOPT_POSTFIELDS => '{"q":"' . $search . '","gl":"id","hl":"id","autocorrect":true}',
             CURLOPT_HTTPHEADER => array(
                 'X-API-KEY: 1702350c579658e5fe69187632c930e96d5ad0e3',
                 'Content-Type: application/json',
@@ -231,7 +237,39 @@ class Kebenaran extends Controller
     // add alamat lowongan
     public function AddAlamat(Request $request)
     {
-        $aw = $request->input('judul');
-        return json_encode($aw);
+        $this->validate($request, [
+            'judul' => "required",
+            'ptalamat' => "required",
+        ]);
+        $title = $request->input('title');
+        $link = $request->input('linkurl');
+        $judul = $request->input(htmlentities('judul'));
+        $status = $request->input('statuskebenaran');
+        $alamat = $request->input(htmlspecialchars('ptalamat'));
+        $alamatbaru = str_replace(array('&','<','>'), array('&amp;','&lt;','&gt;'), $alamat);
+        $cek = DB::table('alamat_perusahaans')->where('alamat', '=', $alamat)->count();
+        if ($cek > 0) {
+            return response()->json([
+                'status' => 400,
+                'title' => 'Alamat Suda ada'
+            ]);
+        } 
+        if ($judul == "") {
+            return response()->json([
+                'status' => 300,
+                'title' => 'Judul harap di isi'
+            ]);
+        }else {
+            $save = DB::table('alamat_perusahaans')->insert([
+                'nama_perusahaan' => $judul,
+                'alamat' => $alamatbaru,
+                'url' => $link,
+                'status' => $status,
+                'title_judul' => $title,
+            ]);
+            return response()->json([
+                'title' => 'Sukses Add Alamat'
+            ]);
+        }
     }
 }

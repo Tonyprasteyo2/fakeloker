@@ -16,7 +16,7 @@ class CreateAlamatPerusahaansTable extends Migration
         Schema::create('alamat_perusahaans', function (Blueprint $table) {
             $table->id();
             $table->string('nama_perusahaan');
-            $table->string('alamat');
+            $table->text('alamat');
             $table->string('url');
             $table->string('status');
             $table->string('title_judul');

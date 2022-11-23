@@ -274,9 +274,9 @@ const carigugel = (e) => {
             let tes = [respon];
             tes.forEach(element => {
                 let er = element['organic'];
-                for (let index = 0; index < er.length; index++) {
+                for (let index = 1; index < er.length; index++) {
                     const site = er[index];
-                    document.querySelector('#judul_web_gugel').innerHTML += '<option value="'+site.title +'">"' + site.title + '"</option>';
+                    document.querySelector('#judul_title').innerHTML += '<option value="'+site.title +'">"' + site.title + '"</option>';
                     document.querySelector('#url_web_kebenaran').innerHTML += '<option value="'+site.link +'">' + site.link + '</option>';
                 }
             });
@@ -288,7 +288,7 @@ const carigugel = (e) => {
 // add informasi alamat lowongan
 const addinformasi = (e) => {
     e.preventDefault();
-    const titlegugel = $("#judul_web_gugel").val();
+    const titlegugel = $("#judul_title").val();
     const linkkebenaran = $("#url_web_kebenaran").val();
     let judulpt = $("#namapt").val();
     judulpt = judulpt.split(" ").map(
@@ -310,17 +310,43 @@ const addinformasi = (e) => {
                     _token: $('meta[name="csrf-token"]').attr("content"),
                     title: titlegugel,
                     linkurl: linkkebenaran,
-                    judul: judulpt,
+                    judul: judulubah,
                     statuskebenaran: statusLoker,
                     ptalamat:alamatpt
                 },
                 dataType: "json",
-                success: function (response) {
-                    console.log(response);
+                success: function (res) {
+                    if (res.status == 300) {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: res.title,
+                            timer: 3000
+                        });
+                    }
+                    if (res.status == 400) {
+                        Swal.fire({
+                            icon: 'info',
+                            title: res.title,
+                            timer: 3000
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'success',
+                            title: res.title,
+                            timer: 3100
+                        })
+                        setTimeout(() => {
+                            location.reload();
+                        }, 3100);
+                    }
                 }
             });
         }
     } else {
-        console.log('s');
+        Swal.fire({
+            icon: 'warning',
+            title: "Harap masukan dengan benar",
+            timer: 3100
+        });
     }
 }
