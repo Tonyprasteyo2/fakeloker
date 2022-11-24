@@ -16,7 +16,7 @@ $(document).ready(function () {
         }
         if (filterEmail.test(email)) {
             $.ajax({
-                type: "post",
+                type: "POST",
                 url: "logiuser",
                 data: {
                     _token: csrfToken,
@@ -59,3 +59,12 @@ $(document).ready(function () {
         }
     });
 });
+
+const show = ()=>{
+    let password = document.getElementById("password");
+    if (password.type === "password") {
+        password.type ="text";
+    }else{
+        password.type="password";
+    }
+}
