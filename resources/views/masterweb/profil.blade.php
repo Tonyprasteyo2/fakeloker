@@ -41,6 +41,16 @@
                 </div>
             </div>
             <div class="container mt-5">
+                @if (session()->has('message')) 
+                    <div class="mb-2 bg-success p-2 rounded text-white " style="font-size: 35px;">
+                        <p class="mt-1">Ganti Password Sukses,Silakan Login Kembali.</p>
+                        <script>
+                            setTimeout(() => {
+                                window.location="login";
+                            }, 3999);
+                        </script> 
+                    </div>
+                @endif
                 <form method="POST" enctype="multipart/form-data" class="form-horizontal form-material" action="update">
                     @csrf
 
@@ -64,20 +74,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="w-full text-center mt-4">
-                                    @foreach ($data as $item)
-                                        @if ($item->aktif == true)
-                                             <header class="position-relative  top-5 w-full py-1 bg-success rounded text-white">
-                                                 <h2 class="lh-base" style="letter-spacing: 1px;">Verifikasi</h2>
-                                             </header>
-                                        @else
-                                            <header class="position-relative  top-5 w-full bg-danger rounded text-white mb-2">
-                                                <h2 class="lh-base" style="letter-spacing: 1px;">Belum Verifikasi</h2>
-                                            </header>
-                                            <a href="#" class=" bg-info rounded p-2 fs-5 " style="color:black;letter-spacing:1.5px;">Verifikasi</a>
-                                        @endif
-                                    @endforeach
-                                 </div>
                             </div>
                             <div class="bg-danger p-1 text-center position-relative close d-none">
                                 <strong class="text-white ">File Gambar Harus PNG/JPG</strong>
@@ -105,8 +101,7 @@
                                     </div>
                                     <div class="form-group mb-4">
                                         <label class="col-md-12 p-0">Status</label>
-                                        <input type="text" class="form-control border-0 bg-info p-1 text-white" readonly value="<?php $result = Auth::user()->role ;
-                                        echo ucfirst($result)?>" placeholder="Disabled input" aria-label="Disabled input "/>
+                                        <input type="text" class="form-control border-0 bg-info p-1 text-white" readonly value="{{ Auth::user()->role }}" placeholder="Disabled input" aria-label="Disabled input "/>
                                     </div>
                                     <div class="row mb-4">
                                         <div class="col-6 col-lg-6">
@@ -147,6 +142,8 @@
     @include('layout.footer')
 
     <script src="{{ asset('js/sweetaalert.min.js') }}"></script>
+
     @include('sweetalert::alert')
+
 </body>
 </html>
