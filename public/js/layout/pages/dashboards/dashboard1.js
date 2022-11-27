@@ -1,3 +1,5 @@
+
+// profil
 const Cekstrong = (CekString) => {
     switch (CekString) {
         case 1:
@@ -68,6 +70,8 @@ const tutup = () => {
     $(".close").addClass("d-none");
     $(".closed").addClass("d-none");
 };
+
+// hapus user
 const DeleteUser = (id) => {
     const token = $('meta[name="csrf-token"]').attr("content");
     Swal.fire({
@@ -104,6 +108,8 @@ const DeleteUser = (id) => {
         }
     });
 };
+
+// update user
 const UpdateUser = (id) => {
     const token = $('meta[name="csrf-token"]').attr("content");
     $.ajax({
@@ -227,7 +233,7 @@ const addusernew = (e) => {
             type: "post",
             url: "addusernew",
             data: {
-                _token:$('input[name="_token"]').val(),
+                _token: $('input[name="_token"]').val(),
                 namanew: namamembernew,
                 emailnew: emailnew,
                 pasnew: pasnew,
@@ -238,7 +244,7 @@ const addusernew = (e) => {
                 if (res.status == 200) {
                     Swal.fire({
                         icon: "success",
-                        title:res.title,
+                        title: res.title,
                         text: res.text,
                         timer: 3000
                     });
@@ -251,7 +257,7 @@ const addusernew = (e) => {
     } else {
         Swal.fire({
             icon: "warning",
-            title:"Gagal",
+            title: "Gagal",
             text: "Password Harus Berupa Huruf Besar dan angka",
             timer: 2500
         });
@@ -276,13 +282,13 @@ const carigugel = (e) => {
                 let er = element['organic'];
                 for (let index = 1; index < er.length; index++) {
                     const site = er[index];
-                    document.querySelector('#judul_title').innerHTML += '<option value="'+site.title +'">"' + site.title + '"</option>';
-                    document.querySelector('#url_web_kebenaran').innerHTML += '<option value="'+site.link +'">' + site.link + '</option>';
+                    document.querySelector('#judul_title').innerHTML += '<option value="' + site.title + '">"' + site.title + '"</option>';
+                    document.querySelector('#url_web_kebenaran').innerHTML += '<option value="' + site.link + '">' + site.link + '</option>';
                 }
             });
         }
     });
-    
+
 }
 
 // add informasi alamat lowongan
@@ -296,9 +302,22 @@ const addinformasi = (e) => {
     ).join(" ");
     let statusLoker = $(".statuspt").val();
     const alamatpt = $(".alamatpt").val();
+    if (alamatpt === "" && judulpt === "" && linkkebenaran === "") {
+        Swal.fire({
+            icon: "info",
+            text: "Form Harus Terisi",
+            timer: 2500,
+            showConfirmButton: false
+        });
+    }
     if (judulpt.match("[A-Z]")) {
         if (statusLoker == "") {
-            console.log('harus di isi');
+            Swal.fire({
+                icon: "info",
+                text: "Harap isi status kebenaran",
+                timer: 2500,
+                showConfirmButton: false
+            });
         } else {
             let ubahjudulpt = judulpt.split(" ");
             let hasilubahjudul = ubahjudulpt[0].toUpperCase();
@@ -308,45 +327,38 @@ const addinformasi = (e) => {
                 url: "addalamat",
                 data: {
                     _token: $('meta[name="csrf-token"]').attr("content"),
-                    title: titlegugel,
-                    linkurl: linkkebenaran,
-                    judul: judulubah,
-                    statuskebenaran: statusLoker,
-                    ptalamat:alamatpt
+                    'judul': judulubah,
+                    'statusloker': statusLoker,
+                    'alamatpt': alamatpt,
+                    'titlelink': titlegugel,
+                    'link': linkkebenaran,
+
                 },
                 dataType: "json",
                 success: function (res) {
-                    if (res.status == 300) {
+                    if (res.status == 200) {
                         Swal.fire({
-                            icon: 'warning',
-                            title: res.title,
-                            timer: 3000
+                            icon: "success",
+                            text: "sukses Add Alamat",
+                            timer: 2500,
+                            showConfirmButton: false
                         });
-                    }
-                    if (res.status == 400) {
-                        Swal.fire({
-                            icon: 'info',
-                            title: res.title,
-                            timer: 3000
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'success',
-                            title: res.title,
-                            timer: 3100
-                        })
                         setTimeout(() => {
                             location.reload();
-                        }, 3100);
+                        }, 3300);
+
+                    } else {
+                        Swal.fire({
+                            icon: "warning",
+                            text: "Alamat Sudah Ada,Silakan Cek Kembali",
+                            timer: 2500,
+                            showConfirmButton: false
+                        });
                     }
                 }
             });
         }
-    } else {
-        Swal.fire({
-            icon: 'warning',
-            title: "Harap masukan dengan benar",
-            timer: 3100
-        });
     }
 }
+
+
