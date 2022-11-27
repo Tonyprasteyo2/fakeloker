@@ -90,7 +90,7 @@
                         <div class="row mb-3">
                             <div class="col-12 col-lg-6">
                                 <label for="namapt" class="form-label">Nama Perusaaan</label>
-                                <input type="text" class="form-control" id="namapt" placeholder="Masukan nama perusaaan" name="namapt"/>
+                                <input type="text" class="form-control" id="namapt" placeholder="Masukan nama perusaaan" name="namapt" required/>
                             </div>
                             <div class="col col-lg-6">
                                 <label for="statuspt" class="form-label">Status Kebenaran</label>
