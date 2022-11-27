@@ -66,10 +66,10 @@ class Kebenaran extends Controller
         return view('masterweb.profil', compact("title", "data"));
     }
 
-    // update user admin
+    // update user profil admin
     public function UpdateUser(Request $request)
     {
-        $validatora = Validator::make($request->all(),[
+        $validatora = Validator::make($request->all(), [
             "nama" => "required",
             "foto" => "required"
         ]);
@@ -111,70 +111,88 @@ class Kebenaran extends Controller
         }
     }
 
-    // view user member
-public function UserData(Request $request)
-{
-    $title = "Data User";
-    $data = DB::table('useradmins')->select()->join('aktifasis', 'aktifasis.user_id', '=', 'useradmins.id')->get();
-    return view("masterweb.user", compact("title", "data"));
-}
-
-// delete user member
-public function DeleteUser(Request $request)
-{
-    $id = $request->input('id');
-    $hapus = DB::table('aktifasis')->leftJoin("useradmins", "aktifasis.user_id", "=", "useradmins.id")->where("user_id", $id);
-    DB::table('useradmins')->where("id", $id)->delete();
-    $hapus->delete();
-    return response()->json([
-        "status" => 200,
-        "title" => "Berhasil Hapus User"
-    ]);
-}
-
-// view user member
-public function ViewUser(Request $request)
-{
-    $update = htmlspecialchars($request->input('id'));
-    $view = DB::table('useradmins')->where('id', $update)->get();
-    return json_encode($view);
-}
-
-// update user member
-public function UpdateMember(Request $request)
-{
-    $this->validate($request, [
-        "view_pass" => "required",
-        "view_level" => "required"
-    ]);
-    $id = $request->input('id_member');
-    $namaMember = htmlspecialchars($request->input('nama_member'));
-    $emailMember = $request->input('view_email');
-    $passwordMember = $request->input('view_pass');
-    $roleMember = $request->input('view_level');
-    if (filter_var($emailMember, FILTER_VALIDATE_EMAIL)) {
-        $update = DB::table('useradmins')->where('id', $id)->update([
-            "nama_lengkap" => $namaMember,
-            "email" => $emailMember,
-            "password" => Hash::make($passwordMember),
-            "role" => $roleMember,
-        ]);
-        $dataEmail = [
-            "email" => $emailMember,
-            "password" => $passwordMember,
-        ];
-        Mail::to($emailMember)->send(new SendMail($dataEmail));
-        return response()->json([
-            "status" => 200,
-            "title" => "Sukses",
-            "text" => "Berhasil Update User"
-        ]);
-    } else {
-        return response()->json([
-            "status" => 300,
-            "title" => "Gagal",
-            "text" => "Silakan Coba Kembali"
-        ]);
+    // view informasi add alamat
+    public function Informasi()
+    {
+        $title = "Add Informasi";
+        return view('masterweb.add', compact("title"));
     }
-}
+
+    // get search alamat in google
+    public function curl(Request $request)
+    {
+        $search = htmlentities($request->input('gugel'));
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://google.serper.dev/search',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => '{"q":"' . $search . '","gl":"id","hl":"id","autocorrect":true}',
+            CURLOPT_HTTPHEADER => array(
+                'X-API-KEY: 1702350c579658e5fe69187632c930e96d5ad0e3',
+                'Content-Type: application/json',
+            )
+        ));
+        $eks = curl_exec($curl);
+        curl_close($curl);
+        return json_encode($eks);
+    }
+
+    // fungsi filter string input
+    public function filterString($data)
+    {
+        $data = str_replace(array('&amp;', '&lt;', '&gt;'), array('&amp;amp;', '&amp;lt;', '&amp;gt;'), $data);
+        $data = preg_replace('/(&#*\w+)[\x00-\x20]+;/u', '$1;', $data);
+        $data = preg_replace('/(&#x*[0-9A-F]+);*/iu', '$1;', $data);
+        $data = html_entity_decode($data, ENT_COMPAT, 'UTF-8');
+        $data = preg_replace('#(<[^>]+?[\x00-\x20"\'])(?:on|xmlns)[^>]*+>#iu', '$1>', $data);
+        $data = preg_replace('#([a-z]*)[\x00-\x20]*=[\x00-\x20]*([`\'"]*)[\x00-\x20]*j[\x00-\x20]*a[\x00-\x20]*v[\x00-\x20]*a[\x00-\x20]*s[\x00-\x20]*c[\x00-\x20]*r[\x00-\x20]*i[\x00-\x20]*p[\x00-\x20]*t[\x00-\x20]*:#iu', '$1=$2nojavascript...', $data);
+        $data = preg_replace('#([a-z]*)[\x00-\x20]*=([\'"]*)[\x00-\x20]*v[\x00-\x20]*b[\x00-\x20]*s[\x00-\x20]*c[\x00-\x20]*r[\x00-\x20]*i[\x00-\x20]*p[\x00-\x20]*t[\x00-\x20]*:#iu', '$1=$2novbscript...', $data);
+        $data = preg_replace('#([a-z]*)[\x00-\x20]*=([\'"]*)[\x00-\x20]*-moz-binding[\x00-\x20]*:#u', '$1=$2nomozbinding...', $data);
+        $data = preg_replace('#(<[^>]+?)style[\x00-\x20]*=[\x00-\x20]*[`\'"]*.*?expression[\x00-\x20]*\([^>]*+>#i', '$1>', $data);
+        $data = preg_replace('#(<[^>]+?)style[\x00-\x20]*=[\x00-\x20]*[`\'"]*.*?behaviour[\x00-\x20]*\([^>]*+>#i', '$1>', $data);
+        $data = preg_replace('#(<[^>]+?)style[\x00-\x20]*=[\x00-\x20]*[`\'"]*.*?s[\x00-\x20]*c[\x00-\x20]*r[\x00-\x20]*i[\x00-\x20]*p[\x00-\x20]*t[\x00-\x20]*:*[^>]*+>#iu', '$1>', $data);
+        $data = preg_replace('#</*\w+:\w[^>]*+>#i', '', $data);
+
+        do {
+            $old_data = $data;
+            $data = preg_replace('#</*(?:applet|b(?:ase|gsound|link)|embed|frame(?:set)?|i(?:frame|layer)|l(?:ayer|ink)|meta|object|s(?:cript|tyle)|title|xml)[^>]*+>#i', '', $data);
+        } while ($old_data !== $data);
+        return $data;
+    }
+
+    // add alammmat lowongan
+    public function AddAlamat(Request $request)
+    {
+        $judul = $this->filterString($request->input('judul'));
+        $statuskebenaran = $this->filterString($request->input('statusloker'));
+        $alamat = $this->filterString($request->input('alamatpt'));
+        $alamatbaru = str_replace(array('&','<','>'), array('&amp;','&lt;','&gt;'), $alamat);
+        $title = $this->filterString($request->input('titlelink'));
+        $link = filter_var($request->input('link'),FILTER_VALIDATE_URL);
+        $cek = DB::table('alamat_perusahaans')->where('alamat', '=', $alamatbaru)->count();
+        if($request->method() == 'POST'){
+            if ($cek > 0) {
+                return response()->json([
+                    "status"=>320,
+                ]);
+            }else {
+                DB::table('alamat_perusahaans')->insert([
+                    'nama_perusahaan' => $judul,
+                    'alamat' => $alamatbaru,
+                    'url' => $link,
+                    'status' => $statuskebenaran,
+                    'title_judul' => $title,
+                ]);
+                return response()->json([
+                    "status"=>200,
+                ]);
+            }
+        }
+    }
 }
