@@ -204,6 +204,8 @@ const UserMemberUpdate = (e) => {
         });
     }
 };
+
+// add user new
 const addusernew = (e) => {
     e.preventDefault();
     let namamembernew = $(".namanew").val();
@@ -361,4 +363,28 @@ const addinformasi = (e) => {
     }
 }
 
-
+// delete informasi
+const deleteinformasi = (id)=>{
+     $.ajax({
+         type: "delete",
+         url: "deletealamat/"+id,
+         data: {
+              _token: $('meta[name="csrf-token"]').attr("content"),
+             id:id,
+         },
+         dataType: "json",
+         success: function (response) {
+            if (response.status == 200) {
+                Swal.fire({
+                    icon: "success",
+                    text: "Sukses Hapus Alamat",
+                    timer: 2500,
+                    showConfirmButton: false
+                });
+                setTimeout(() => {
+                    location.reload();
+                }, 3300);
+            }
+         }
+     });
+}

@@ -65,7 +65,7 @@
                                 <td>{{ $no++ }}</td>
                                 <td>{{ $informasi->nama_perusahaan }}</td>
                                 <td><?php $alamat= html_entity_decode($informasi->alamat);
-                                echo substr($alamat,0,77) ;?></td>
+                                echo substr($alamat,0,50) ;?></td>
                                 <td>
                                     @if ($informasi->status === "Hoax" || $informasi->status ==="hoax")
                                          <p class="bg-danger text-white text-center p-1 rounded">Hoax</p>
@@ -76,7 +76,10 @@
                                 <td>
                                     <a target="blank" href="{{ $informasi->url }}" class="bg-primary text-white p-3 rounded text-center">Url</a>
                                 </td>
-                                <td>seting</td>
+                                <td>
+                                    <a id="{{ $informasi->id }}" onclick="deleteinformasi(this.id)" style="cursor: pointer;"><i class="fa fa-trash"></i></a>
+                                    <a href="editalamat/<?php echo uniqid($informasi->id) ;?>"><i class="fa fa-edit"></i></a>
+                                </td>
                             </tr>    
                             @endforeach
                         </tbody>
@@ -94,6 +97,8 @@
     @include('layout.footer')
 
     <script src="{{asset('vendor/datatable/datatables.min.js')}}" type="text/javascript"></script>
+
+    <script src="{{ asset('js/sweetaalert.min.js') }}"></script>
 
     <script>
         $(document).ready(function () {
