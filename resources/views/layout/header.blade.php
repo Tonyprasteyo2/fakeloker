@@ -21,7 +21,7 @@
                     <ul class="navbar-nav ms-auto d-flex align-items-center">
                         <li>
                             <a class="profile-pic" href="#">
-                                <img src="foto/{{Auth::user()->foto}}" alt="user-img" width="36" height="40"
+                                <img src="{{ url('foto') }}/{{ Auth::user()->foto}}" alt="user-img" width="36" height="40"
                                     class="img-circle"><span class="text-white font-medium">{{ Auth::user()->nama_lengkap }}</span></a>
                         </li>
                     </ul>
