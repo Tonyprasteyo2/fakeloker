@@ -66,11 +66,15 @@
                                 <td>{{ $informasi->nama_perusahaan }}</td>
                                 <td><?php $alamat= html_entity_decode($informasi->alamat);
                                 echo substr($alamat,0,50) ;?></td>
-                                <td>
-                                    @if ($informasi->status === "Hoax" || $informasi->status ==="hoax")
-                                         <p class="bg-danger text-white text-center p-1 rounded">Hoax</p>
-                                    @else
-                                    <p class="bg-info text-white text-center p-1 rounded">Terbukti</p>
+                                <td> 
+                                    @if ($informasi->status == "Hoax")
+                                        <p class="bg-danger p-2 rounded text-white  text-center">Status Hoax</p>
+                                    @endif
+                                    @if ($informasi->status == "Real")
+                                        <p class="bg-success p-2 rounded text-white text-center">Status Terbukti</p>
+                                    @endif
+                                    @if($informasi->status == "Waspada")
+                                        <p class="bg-info p-2 rounded text-white text-center">Status Waspada</p>
                                     @endif
                                 </td>
                                 <td>

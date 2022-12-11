@@ -50,6 +50,7 @@
                         </a>
                     </div>
                     <div class="col-6 position-relative">
+                        <div id="alert_search"></div>
                         <form class="cari_gugel mb-3" onsubmit="return carigugel(event)">
                             <div class="row">
                                 <div class="col-8 ">
@@ -98,6 +99,7 @@
                                     <option value="">Pilih Status</option>
                                     <option value="Hoax">Hoax</option>
                                     <option value="Real">Terbukti/No Hoax</option>
+                                    <option value="Waspada">Waspada</option>
                                 </select>
                             </div>
                         </div>

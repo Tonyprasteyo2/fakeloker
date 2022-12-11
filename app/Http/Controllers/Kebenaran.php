@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Mail\SendMail;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
 class Kebenaran extends Controller
@@ -51,7 +53,7 @@ class Kebenaran extends Controller
     }
 
     // dasboard 
-    public function Dasboard(Request $request)
+    public function Dasboard()
     {
         $title = "Dasboard";
         return view('masterweb.index', compact("title"));
@@ -118,7 +120,7 @@ class Kebenaran extends Controller
         return view('masterweb.add', compact("title"));
     }
 
-    // get search alamat in google
+    
     public function curl(Request $request)
     {
         $search = htmlentities($request->input('gugel'));
@@ -194,5 +196,69 @@ class Kebenaran extends Controller
                 ]);
             }
         }
+    }
+
+    // view alamat perusahaan
+    public function ViewInformasi()
+    {
+        $title="Informasi Alamat";
+        $data = DB::table('alamat_perusahaans')->select("*")->get();
+        return view('masterweb.informasi',compact("title","data"));
+    }
+
+    // delete alamat
+    public function Deletealamat(Request $request)
+    {
+        DB::table('alamat_perusahaans')->where('id',trim($request->input("id")))->delete();
+        return response()->json(["status"=>200]);
+    }
+
+    // view edit alamat
+    public function Editalamat($id)
+    {
+        $id = $this->filterString($id);
+        $pisah = substr($id,-14,1);
+        $datadb = DB::table('alamat_perusahaans')->where('id','=',$pisah)->get();
+        $title = "Edit Informasi Alamat";
+        return view('masterweb.editalamat',compact("title","datadb"));
+    }
+
+    // update alamat
+    public function UpdateAlamat(Request $request)
+    {
+        $idalamat = $this->filterString($request->input('id'));
+        $editjudul = $request->input('juduledit');
+        $titleedit =  $this->filterString($request->input('titlebaru'));
+        $urledit = $this->filterString($request->input("urledit"));
+        $alamatedit = $this->filterString($request->input("alamatedit"));
+        $statusedit = $this->filterString($request->input("status"));
+        $valid = Validator::make($request->all(),[
+            "juduledit"=>"required",
+             "titlebaru"=>"required",
+             "urledit"=>"required|url",
+            "alamatedit"=>"required",
+        ]);
+        if ($valid->fails()) {
+            return response()->json([
+                "status"=>"gagalform",
+            ]);
+        }
+        $alamatedithasil = str_replace(array('&','<','>'), array('&amp;','&lt;','&gt;'), $alamatedit);
+        $cekalamatbaru = DB::table('alamat_perusahaans')->where('alamat','=',$alamatedithasil)->count();
+        if ($request->isMethod('POST')) {
+            if ($cekalamatbaru > 0) {
+               return response()->json(["status"=>"sama"]);
+            }else {
+                DB::table('alamat_perusahaans')->where('id',$idalamat)->update([
+                    "nama_perusahaan"=>$editjudul,
+                    "alamat"=>$alamatedithasil,
+                    "url"=>$urledit,
+                    "status"=>$statusedit,
+                    "title_judul"=>$titleedit,
+                ]);
+                return response()->json(["status"=>"berhasil"]);
+            }
+        }
+
     }
 }
