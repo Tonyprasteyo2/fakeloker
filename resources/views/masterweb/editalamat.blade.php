@@ -34,8 +34,8 @@
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <div class="d-md-flex">
                             <ol class="breadcrumb ms-auto">
-                                <li class="breadcrumb-item"><a href="masterweb">Dashboard</a></li>
-                                <li class="active breadcrumb-item"><a href="{{ route('add') }}" class="fw-normal">{{ $title 
+                                <li class="breadcrumb-item"><a href="{{ route('masterweb') }}">Dashboard</a></li>
+                                <li class="active breadcrumb-item"><a href="{{ route('informasi') }}" class="fw-normal">{{ $title 
                                 }}</a></li>
                             </ol>
                         </div>

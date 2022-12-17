@@ -33,15 +33,10 @@ Route::group(['middleware' =>['auth']],function (){
         Route::get('editalamat/{id}',[Kebenaran::class,'Editalamat']);
         Route::post('/updatealamat',[Kebenaran::class,'UpdateAlamat'])->name('updatealamat');
     });
-    Route::group(['CekLogin:member'],function (){
-        Route::get('member',function(){
-            return view('member.index');
-        });
-    });
 });
 Route::get('letter',function(){
     return view('layout.letter');
 });
 
-Route::get('/',[App\Http\Controllers\Homeindex::class, 'index']);
-Route::get('index',[App\Http\Controllers\Homeindex::class, 'index']);
+Route::get('/',[App\Http\Controllers\Homeindex::class, 'index'])->name('/');
+Route::get('/index',[App\Http\Controllers\Homeindex::class, 'index'])->name('index');

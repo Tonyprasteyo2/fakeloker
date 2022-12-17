@@ -312,67 +312,69 @@ const addinformasi = (e) => {
     const titlegugel = $("#judul_title").val();
     const linkkebenaran = $("#url_web_kebenaran").val();
     let judulpt = $("#namapt").val();
-    judulpt = judulpt.split(" ").map(
-        (judulpt) => judulpt.substring(0, 1).toUpperCase() + judulpt.slice(1)
-    ).join(" ");
     let statusLoker = $(".statuspt").val();
     const alamatpt = $(".alamatpt").val();
-    if (alamatpt === "" && judulpt === "" && linkkebenaran === "") {
+    let Judulnamapt = judulpt.replace(/pt/g,"PT");
+    ptname = [...new Set(Judulnamapt.split(" "))].join(" ");
+    ptname = ptname.split(" ").map(
+        (ptname)=> ptname.substring(0,1).toUpperCase() + ptname.slice(1)
+    ).join(" ");
+    if (statusLoker == "") {
         Swal.fire({
-            icon: "info",
+            icon: "warning",
             text: "Form Harus Terisi",
             timer: 2500,
             showConfirmButton: false
         });
-    }
-    if (judulpt.match("[A-Z]")) {
-        if (statusLoker == "") {
-            Swal.fire({
-                icon: "info",
-                text: "Harap isi status kebenaran",
-                timer: 2500,
-                showConfirmButton: false
-            });
-        } else {
-            let ubahjudulpt = judulpt.split(" ");
-            let hasilubahjudul = ubahjudulpt[0].toUpperCase();
-            let judulubah = hasilubahjudul + "." + ubahjudulpt.slice(1).join(" ");
-            $.ajax({
-                type: "post",
-                url: "addalamat",
-                data: {
-                    _token: $('meta[name="csrf-token"]').attr("content"),
-                    'judul': judulubah,
-                    'statusloker': statusLoker,
-                    'alamatpt': alamatpt,
-                    'titlelink': titlegugel,
-                    'link': linkkebenaran,
+    }else if (statusLoker.match('[a-zA-Z]')) {
+        $.ajax({
+            type: "post",
+            url: "addalamat",
+            data: {
+                _token: $('meta[name="csrf-token"]').attr("content"),
+                'judul': ptname,
+                'statusloker': statusLoker,
+                'alamatpt': alamatpt,
+                'titlelink': titlegugel,
+                'link': linkkebenaran,
 
-                },
-                dataType: "json",
-                success: function (res) {
-                    if (res.status == 200) {
-                        Swal.fire({
-                            icon: "success",
-                            text: "sukses Add Alamat",
-                            timer: 2500,
-                            showConfirmButton: false
-                        });
-                        setTimeout(() => {
-                            location.reload();
-                        }, 3300);
-
-                    } else {
-                        Swal.fire({
-                            icon: "warning",
-                            text: "Alamat Sudah Ada,Silakan Cek Kembali",
-                            timer: 2500,
-                            showConfirmButton: false
-                        });
-                    }
+            },
+            dataType: "json",
+            success: function (res) {
+                if (res.status === 300) {
+                    Swal.fire({
+                        icon: "warning",
+                        text: "Form Harus Terisi",
+                        timer: 2500,
+                        showConfirmButton: false
+                    });
+                }else if (res.status === 400) {
+                    Swal.fire({
+                        icon: "info",
+                        text: "Alamat Sudah Ada",
+                        timer: 2500,
+                        showConfirmButton: false
+                    });
+                }else{
+                    Swal.fire({
+                        icon: "success",
+                        text: "Berhasil Add Alamat",
+                        timer: 2500,
+                        showConfirmButton: false
+                    });
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2500);
                 }
-            });
-        }
+            }
+        });
+    }else{
+        Swal.fire({
+            icon: "info",
+            text: "Gagal add,Silakan coba kembali",
+            timer: 2500,
+            showConfirmButton: false
+        });
     }
 }
 

@@ -1,13 +1,7 @@
 <header class="topbar" data-navbarbg="skin5">
             <nav class="navbar top-navbar navbar-expand-md navbar-dark">
                 <div class="navbar-header" data-logobg="skin6">
-                    <a class="navbar-brand" href="dashboard.html">
-                        <!-- Logo icon -->
-                        <b class="logo-icon">
-                            <!-- Dark Logo icon -->
-                            <img src="{{ asset('vendor/images/logo-icon.png')}}" alt="homepage" />
-                        </b>
-                        <!--End Logo icon -->
+                    <a class="navbar-brand" href="{{ route('masterweb') }}">
                         <!-- Logo text -->
                         <span class="logo-text">
                             <!-- dark Logo text -->

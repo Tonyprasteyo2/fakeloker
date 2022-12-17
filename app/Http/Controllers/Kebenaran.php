@@ -56,7 +56,13 @@ class Kebenaran extends Controller
     public function Dasboard()
     {
         $title = "Dasboard";
-        return view('masterweb.index', compact("title"));
+        $totalVisit = DB::table('visitors')->select("*")->get();
+        $totalalamat = DB::table('alamat_perusahaans')->select("*")->count();
+        for ($i = 1; $i < 13; $i++) {
+            $aw = DB::table('visitors')->selectRaw('count(id_visit) as hasil')->where('bulan', $i)->count();
+            $visit[] = $aw;
+        }
+        return view('masterweb.index', compact("title", "totalVisit", "totalalamat", "visit"));
     }
 
     // profil
@@ -64,7 +70,7 @@ class Kebenaran extends Controller
     {
         $title = "Profil";
         $session_id = $request->session()->start();
-        $data = DB::table('useradmins')->select()->join('aktifasis', 'aktifasis.user_id', '=', 'useradmins.id')->where('user_id', $session_id)->get();
+        $data = DB::table('useradmins')->select("*")->where("id", '=', session_id())->get();
         return view('masterweb.profil', compact("title", "data"));
     }
 
@@ -120,7 +126,7 @@ class Kebenaran extends Controller
         return view('masterweb.add', compact("title"));
     }
 
-    
+
     public function curl(Request $request)
     {
         $search = htmlentities($request->input('gugel'));
@@ -171,29 +177,35 @@ class Kebenaran extends Controller
     // add alammmat lowongan
     public function AddAlamat(Request $request)
     {
-        $judul = $this->filterString($request->input('judul'));
-        $statuskebenaran = $this->filterString($request->input('statusloker'));
-        $alamat = $this->filterString($request->input('alamatpt'));
-        $alamatbaru = str_replace(array('&','<','>'), array('&amp;','&lt;','&gt;'), $alamat);
-        $title = $this->filterString($request->input('titlelink'));
-        $link = filter_var($request->input('link'),FILTER_VALIDATE_URL);
-        $cek = DB::table('alamat_perusahaans')->where('alamat', '=', $alamatbaru)->count();
-        if($request->method() == 'POST'){
+        $valid = Validator::make($request->all(), [
+            "link" => "required|url",
+            "titlelink" => "required",
+            "judul" => "required|min:10",
+            "statusloker" => "required",
+            "alamatpt" => "required",
+        ]);
+        if ($valid->fails()) {
+            return response()->json(["status" => 300]);
+        }
+        $url = $this->filterString($request->input("link"));
+        $titleurl = $this->filterString($request->input("titlelink"));
+        $judul = $this->filterString($request->input("judul"));
+        $status = $this->filterString($request->input("statusloker"));
+        $alamat = $this->filterString($request->input("alamatpt"));
+        $alamatadd = str_replace(array('&', '<', '>'), array('&amp;', '&lt;', '&gt;'), $alamat);
+        $cek = DB::table('alamat_perusahaans')->where('alamat', '=', $alamatadd)->count();
+        if ($request->isMethod("POST")) {
             if ($cek > 0) {
-                return response()->json([
-                    "status"=>320,
-                ]);
-            }else {
+                return response()->json(["status" => 400]);
+            } else {
                 DB::table('alamat_perusahaans')->insert([
                     'nama_perusahaan' => $judul,
-                    'alamat' => $alamatbaru,
-                    'url' => $link,
-                    'status' => $statuskebenaran,
-                    'title_judul' => $title,
+                    'alamat' => $alamatadd,
+                    'url' => $url,
+                    'status' => $status,
+                    'title_judul' => $titleurl,
                 ]);
-                return response()->json([
-                    "status"=>200,
-                ]);
+                return response()->json(["status" => 200]);
             }
         }
     }
@@ -201,26 +213,26 @@ class Kebenaran extends Controller
     // view alamat perusahaan
     public function ViewInformasi()
     {
-        $title="Informasi Alamat";
+        $title = "Informasi Alamat";
         $data = DB::table('alamat_perusahaans')->select("*")->get();
-        return view('masterweb.informasi',compact("title","data"));
+        return view('masterweb.informasi', compact("title", "data"));
     }
 
     // delete alamat
     public function Deletealamat(Request $request)
     {
-        DB::table('alamat_perusahaans')->where('id',trim($request->input("id")))->delete();
-        return response()->json(["status"=>200]);
+        DB::table('alamat_perusahaans')->where('id', trim($request->input("id")))->delete();
+        return response()->json(["status" => 200]);
     }
 
     // view edit alamat
     public function Editalamat($id)
     {
         $id = $this->filterString($id);
-        $pisah = substr($id,-14,1);
-        $datadb = DB::table('alamat_perusahaans')->where('id','=',$pisah)->get();
+        $pisah = substr($id, -14, 1);
+        $datadb = DB::table('alamat_perusahaans')->where('id', '=', $pisah)->get();
         $title = "Edit Informasi Alamat";
-        return view('masterweb.editalamat',compact("title","datadb"));
+        return view('masterweb.editalamat', compact("title", "datadb"));
     }
 
     // update alamat
@@ -232,33 +244,32 @@ class Kebenaran extends Controller
         $urledit = $this->filterString($request->input("urledit"));
         $alamatedit = $this->filterString($request->input("alamatedit"));
         $statusedit = $this->filterString($request->input("status"));
-        $valid = Validator::make($request->all(),[
-            "juduledit"=>"required",
-             "titlebaru"=>"required",
-             "urledit"=>"required|url",
-            "alamatedit"=>"required",
+        $valid = Validator::make($request->all(), [
+            "juduledit" => "required",
+            "titlebaru" => "required",
+            "urledit" => "required|url",
+            "alamatedit" => "required",
         ]);
         if ($valid->fails()) {
             return response()->json([
-                "status"=>"gagalform",
+                "status" => "gagalform",
             ]);
         }
-        $alamatedithasil = str_replace(array('&','<','>'), array('&amp;','&lt;','&gt;'), $alamatedit);
-        $cekalamatbaru = DB::table('alamat_perusahaans')->where('alamat','=',$alamatedithasil)->count();
+        $alamatedithasil = str_replace(array('&', '<', '>'), array('&amp;', '&lt;', '&gt;'), $alamatedit);
+        $cekalamatbaru = DB::table('alamat_perusahaans')->where('alamat', '=', $alamatedithasil)->count();
         if ($request->isMethod('POST')) {
             if ($cekalamatbaru > 0) {
-               return response()->json(["status"=>"sama"]);
-            }else {
-                DB::table('alamat_perusahaans')->where('id',$idalamat)->update([
-                    "nama_perusahaan"=>$editjudul,
-                    "alamat"=>$alamatedithasil,
-                    "url"=>$urledit,
-                    "status"=>$statusedit,
-                    "title_judul"=>$titleedit,
+                return response()->json(["status" => "sama"]);
+            } else {
+                DB::table('alamat_perusahaans')->where('id', $idalamat)->update([
+                    "nama_perusahaan" => $editjudul,
+                    "alamat" => $alamatedithasil,
+                    "url" => $urledit,
+                    "status" => $statusedit,
+                    "title_judul" => $titleedit,
                 ]);
-                return response()->json(["status"=>"berhasil"]);
+                return response()->json(["status" => "berhasil"]);
             }
         }
-
     }
 }
