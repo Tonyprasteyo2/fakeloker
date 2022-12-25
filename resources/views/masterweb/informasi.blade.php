@@ -64,7 +64,7 @@
                             <tr>
                                 <td>{{ $no++ }}</td>
                                 <td>{{ $informasi->nama_perusahaan }}</td>
-                                <td><?php $alamat= html_entity_decode($informasi->alamat);
+                                <td><?php $alamat= htmlspecialchars_decode($informasi->alamat);
                                 echo substr($alamat,0,50) ;?></td>
                                 <td> 
                                     @if ($informasi->status == "Hoax")

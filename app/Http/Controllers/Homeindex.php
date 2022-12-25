@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class Homeindex extends Controller
 {
@@ -26,6 +27,7 @@ class Homeindex extends Controller
     //view index
     public function index(Request $request)
     {
+        $title = "Kebenaran";
         if ($request->routeIs('index') || $request->routeIs('/')) {
             $cek = DB::table('visitors')->where('ip',$this->getIp())->count();
             $tambah = DB::table('visitors')->select("*")->get();
@@ -43,7 +45,23 @@ class Homeindex extends Controller
                     "jumlah"=>$es->jumlah+1,
                 ]);
             }
-            return view("index");
+            return view("index",compact("title"));
+        }
+    }
+    public function Cek(Request $request)
+    {
+        $valid = Validator::make($request->all(),[
+            "carialamat"=>"required",
+        ]);
+        $kebenaran = new Kebenaran();
+        $alamat = $request->input('alamat');
+        $filter = $kebenaran->filterString($alamat);
+        $filterxss = str_replace(array('&', '<', '>'), array('&amp;', '&lt;', '&gt;'), $filter);
+        if ($alamat =='') {
+            return response()->json(["status"=>300]);
+        }else {
+            $cek = DB::table('alamat_perusahaans')->where('alamat','like',"%$filterxss%")->get();
+            return response()->json($cek);
         }
     }
 }

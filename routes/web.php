@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Homeindex;
 use App\Http\Controllers\Kebenaran;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,6 @@ Route::group(['middleware' =>['auth']],function (){
 Route::get('letter',function(){
     return view('layout.letter');
 });
-
 Route::get('/',[App\Http\Controllers\Homeindex::class, 'index'])->name('/');
 Route::get('/index',[App\Http\Controllers\Homeindex::class, 'index'])->name('index');
+Route::get('/cekloker',[Homeindex::class,'Cek'])->name('cekloker');

@@ -8,7 +8,7 @@
     "hot": "mix watch --hot",
     "prod": "npm run production",
     "production": "mix --production"
-},
+  },
   "devDependencies": {
     "autoprefixer": "^10.4.9",
     "axios": "^0.27.2",
@@ -448,6 +448,7 @@
     "run-parallel": "^1.2.0",
     "safe-buffer": "^5.1.2",
     "safer-buffer": "^2.1.2",
+    "sanitize-html": "^2.8.1",
     "schema-utils": "^2.7.1",
     "select-hose": "^2.0.0",
     "selfsigned": "^2.1.1",

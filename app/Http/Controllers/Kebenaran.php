@@ -191,8 +191,8 @@ class Kebenaran extends Controller
         $titleurl = $this->filterString($request->input("titlelink"));
         $judul = $this->filterString($request->input("judul"));
         $status = $this->filterString($request->input("statusloker"));
-        $alamat = $this->filterString($request->input("alamatpt"));
-        $alamatadd = str_replace(array('&', '<', '>'), array('&amp;', '&lt;', '&gt;'), $alamat);
+        $alamat = $this->filterString(strtolower($request->input("alamatpt")));
+        $alamatadd = str_replace(array('&', '<p>','</p>','*','<script>','</script>',';','<','>'), array(''), $alamat);
         $cek = DB::table('alamat_perusahaans')->where('alamat', '=', $alamatadd)->count();
         if ($request->isMethod("POST")) {
             if ($cek > 0) {
@@ -242,7 +242,7 @@ class Kebenaran extends Controller
         $editjudul = $request->input('juduledit');
         $titleedit =  $this->filterString($request->input('titlebaru'));
         $urledit = $this->filterString($request->input("urledit"));
-        $alamatedit = $this->filterString($request->input("alamatedit"));
+        $alamatedit = $this->filterString(strtolower($request->input("alamatedit")));
         $statusedit = $this->filterString($request->input("status"));
         $valid = Validator::make($request->all(), [
             "juduledit" => "required",
@@ -255,7 +255,7 @@ class Kebenaran extends Controller
                 "status" => "gagalform",
             ]);
         }
-        $alamatedithasil = str_replace(array('&', '<', '>'), array('&amp;', '&lt;', '&gt;'), $alamatedit);
+        $alamatedithasil = str_replace(array('&', '<p>','</p>','*','<script>','</script>',';','<','>'), array(''), $alamatedit);
         $cekalamatbaru = DB::table('alamat_perusahaans')->where('alamat', '=', $alamatedithasil)->count();
         if ($request->isMethod('POST')) {
             if ($cekalamatbaru > 0) {

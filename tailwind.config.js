@@ -7,6 +7,12 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    fontFamily: {
+      bebas: ['Bebas Neue', 'cursive'],
+      ubuntu:['Ubuntu', 'sans-serif'],
+      popin:['Poppins', 'sans-serif'],
+      roboto:['Roboto', 'sans-serif'],
+    },
   },
   plugins: [],
 }
