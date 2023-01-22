@@ -5,7 +5,7 @@
                         <!-- Logo text -->
                         <span class="logo-text">
                             <!-- dark Logo text -->
-                            <img src="{{ asset('vendor/images/logo-icon.png')}}" alt="homepage" />
+                            <img src="{{ asset('assets/img/kenali.png')}}" alt="homepage" class="w-25"/>
                         </span>
                     </a>
                     <a class="nav-toggler waves-effect waves-light text-dark d-block d-md-none"

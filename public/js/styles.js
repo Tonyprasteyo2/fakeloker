@@ -16,25 +16,24 @@
              $(".alamatshow").addClass('block');
              $("#showalamat").html(" ");
             } else {
-            
              $(".alamatshow").removeClass('hidden');
              $(".alamatshow").addClass('block');
              let hasil = '';
              res.forEach(result => {
                  let pisah = result.alamat;
                  let resalamat = pisah.replace(/</g,'');
-                 let st = '';
-                 if (result.status === "Hoax") {
-                     let sta = "<label class='bg-yellow-500 p-2 p-2 rounded text-white'>Hoax</label>";    
-                     st +=sta;
-                 }else if (result.status == "Real"){
-                     let sta = "<label class='bg-green-500 p-2 rounded text-white'>Real</label>";
-                     st +=sta;
-                 }else{
-                     let sta = "<label class='bg-green-500 p-2 rounded text-white'>Waspada</label>";
-                     st +=sta;
+                 let statusview = "";
+                 if (result.status === "Waspada") {
+                    let statustes = "<p style='background-color:yellow;color:white;padding:5px;border-radius:6.5px;'>Waspada</p>";
+                    statusview += statustes;
+                 }else if (result.status === "Hoax") {
+                    let statustes = "<p style='background-color:red;color:white;padding:5px;border-radius:6.5px;'>Hoax</p>";
+                    statusview += statustes;
+                 }else if(result.status === "Real"){
+                    let statustes = "<p style='background-color:#00FF00;color:white;padding:5px;border-radius:6.5px;'>Real</p>";
+                    statusview += statustes;
                  }
-                 let hasila ="<tr class='border-t first:border-t-0 flex md:p-3 hover:bg-gray-100 md:table-row flex-col w-full flex-wrap' ><td class='p-2 md:p-3'>"+result.nama_perusahaan+"</td><td class='p-2 md:p-3 font-roboto'>"+resalamat+"</td></td><td class='p-2 md:p-3 font-roboto inline-block'>"+st+"  |  <a class='bg-sky-500 p-2 rounded text-white' target='_blank' href="+result.url+">Url</a></td></tr>";
+                 let hasila ="<tr class='border-t first:border-t-0 flex md:p-3 hover:bg-gray-100 md:table-row flex-col w-full flex-wrap' ><td class='p-2 md:p-3'>"+result.nama_perusahaan+"</td><td class='p-2 md:p-3 font-roboto'>"+resalamat+"</td></td><td class='p-1 md:p-2 font-roboto flex text-center position-relative'>"+statusview+" |&nbsp;<a style='background-color:#0000FF;color:white;padding:5px;border-radius:6.5px;' target='_blank' href='"+result.url+"' class='w-100'>Url</a></td></tr>";
                  hasil += hasila;
              });
              $("#showalamat").html(hasil);

@@ -1,4 +1,3 @@
-
 // profil
 const Cekstrong = (CekString) => {
     switch (CekString) {
@@ -284,19 +283,27 @@ const carigugel = (e) => {
             dataType: "json",
             success: function (data) {
                 let respon = JSON.parse(data);
-                let tes = [respon];
-                tes.forEach(element => {
-                    let er = element['organic'];
-                    for (let index = 1; index < er.length; index++) {
-                        const site = er[index];
-                        document.querySelector('#judul_title').innerHTML += '<option value="' + site.title + '">"' + site.title + '"</option>';
-                        document.querySelector('#url_web_kebenaran').innerHTML += '<option value="' + site.link + '">' + site.link + '</option>';
-                    }
-                });
+                if (respon.statusCode == 403) {
+                    let alertapi = document.getElementById("showalrtapiadd");
+                    alertapi.classList.remove("d-none");
+                    alertapi.innerHTML="<h5 class='p-2 bg-info w-25 text-white mt-1'>Gagal Cari Silakan Cek Api Key Anda</h5>";
+                    document.querySelector('#judul_title').innerHTML += '<option value="no search">Silakan Coba kembali</option>';
+                    document.querySelector('#url_web_kebenaran').innerHTML += '<option value="no search">Silakan Coba kembali</option>';
+                }else{
+                    let tes = [respon];
+                    tes.forEach(element => {
+                        let er = element['organic'];
+                        for (let index = 1; index < er.length; index++) {
+                            const site = er[index];
+                            document.querySelector('#judul_title').innerHTML += '<option value="' + site.title + '">"' + site.title + '"</option>';
+                            document.querySelector('#url_web_kebenaran').innerHTML += '<option value="' + site.link + '">' + site.link + '</option>';
+                        }
+                    });
+                }
             }
         });
     } else {
-        document.getElementById("alert_search").innerHTML="<header class='bg-info p-1 rounded'><span onclick='tutupalertsearch()' style='cursor:pointer;' class='d-block'><i class='fas fa-times text-white' style='font-size:20px;'></i><p class='text-white d-inline-block position-relative' style='left:5px;font-size:23px;'>Harap Di isi Form Search</header>";
+        document.getElementById("alert_search").innerHTML="<header class='bg-info p-1 rounded'><span onclick='tutupalertsearch()' style='cursor:pointer;' class='d-block'><i class='fas fa-times text-white' style='font-size:20px;'></i><p class='text-white d-inline-block position-relative' style='left:5px;font-size:20px;'>Harap Di isi Form Search</header>";
     }
 
 }
@@ -471,3 +478,37 @@ $(".updateinformasialamat").submit(function (e) {
         });
     }
 });
+const showapi = ()=>{
+    $(".webapi").addClass("d-none");
+    document.getElementById("showwebapi").innerHTML = "<div class='container mx-auto p-2 w-50'><h3 class='mb-3'>Login In Api<form method='POST' onsubmit='loginapikey(event);'><div class='form-floating mb-3 mt-3'><input type='email' class='form-control'placeholder='Masukan Email Anda' id='email'><label for='email'>Email</label></div><div class='form-floating mb-3 mt-3'><input type='text' class='form-control'placeholder='Masukan Password Anda' id='password'><label for='password'>Password</label></div><button type='submit' class='btn btn-primary'>Login Api</button</form></div>";
+}
+const loginapikey = (e)=>{
+    e.preventDefault();
+    let emailapi = document.getElementById('email').value;
+    let pasapi = document.getElementById('password').value;
+    let token = $('meta[name="csrf-token"]').attr('content');
+    if (emailapi == "" || pasapi =="") {
+        console.log('a');
+    }else{
+        $.ajax({
+            type: "post",
+            url: "/apiloginkey",
+            data: {
+                'email':emailapi,
+                'password':pasapi,
+                '_token':token,
+            },
+            dataType: "json",
+            success: function (res) {
+                let result = JSON.parse(res);
+                if (result.statusCode === 404) {
+                    console.log(result);
+                }else{
+                    document.getElementById('showwebapi').className = "d-none";
+                    let homeapi = document.getElementById('showwebapidata');
+                    homeapi.classList.remove('d-none');
+                }
+            }
+        });
+    }
+}

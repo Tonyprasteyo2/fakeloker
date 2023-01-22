@@ -48,6 +48,10 @@
                         <span>Profil</span>
                         </a>
                     </li>
+                    <li class="sidebar-item"><a class="sidebar-link waves-effect waves-dark sidebar-link dropdown-item" href="{{ route('api')}}"><i class="fa fa-key"></i>
+                        <span>Api</span>
+                        </a>
+                    </li>
                     <li class="sidebar-item">
                         <button class="sidebar-link waves-effect waves-dark sidebar-link dropdown-item" data-bs-toggle="modal" data-bs-target="#keluar" ><i class="fas fa-sign-out-alt"></i>
                         <span>Keluar</span>

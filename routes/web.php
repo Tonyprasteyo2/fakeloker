@@ -26,13 +26,16 @@ Route::group(['middleware' =>['auth']],function (){
         Route::get('profil',[Kebenaran::class,'Profil'])->name('profil');
         Route::post('update',[Kebenaran::class,'UpdateUser'])->name('update');
         Route::get('user',[Kebenaran::class,'UserData'])->name('user');
-        Route::get('/search_gugel',[Kebenaran::class,'curl']);
+        Route::get('/search_gugel',[Kebenaran::class,'Getapi']);
         Route::post('addalamat',[Kebenaran::class,'AddAlamat'])->name('addalamat');
         Route::get('add',[Kebenaran::class,'Informasi'])->name("add");
         Route::get('informasi',[Kebenaran::class,'ViewInformasi'])->name("informasi");
         Route::delete('deletealamat/{id}',[Kebenaran::class,'Deletealamat'])->name('deletealamat');
         Route::get('editalamat/{id}',[Kebenaran::class,'Editalamat']);
         Route::post('/updatealamat',[Kebenaran::class,'UpdateAlamat'])->name('updatealamat');
+        Route::get('/api',[Kebenaran::class,'Api'])->name('api');
+        Route::post('/updateapi',[Kebenaran::class,'Updateapikey'])->name('updateapi');
+        Route::post('/apiloginkey',[Kebenaran::class,'Loginapikey']);
     });
 });
 Route::get('letter',function(){

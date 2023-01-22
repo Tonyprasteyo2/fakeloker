@@ -47,6 +47,7 @@
                     <div class="row">
                         <div class="col-6">
                             <div id="alert_search"></div>
+                            <span id="showalrtapiadd" class="d-none"></span>
                             <form class="cari_gugel mb-3" onsubmit="return carigugel(event)">
                                 <div class="row">
                                     <div class="col-8 ">

@@ -21,7 +21,7 @@
                     <header>
                         <img src="{{ asset('assets/img/icon_login.png') }}" class="w-100 relative bg-cover mx-auto" />
                     </header>
-                    <img class="absolute top-20 right-0 py-1 px-2 w-20 bg-cover " src="{{ asset('assets/img/bulat.png') }}" />
+                    <img class="absolute top-20 right-0 py-1 px-2 w-20 bg-cover " src="{{ asset('assets/img/bulatindex.png') }}" />
                     <h1 class="text-center p-3 text-6xl tracking-tighter " style="margin-top:-35px;">Welcome Back</h1>
                     <p class="text-center p-3 text-xl font-sans tracking-tighter " style="margin-top: -10px;">Nice to see again</p>
                 </div>
@@ -46,7 +46,7 @@
                                 </div>
                                 <button type="submit" class="login rounded bg-cyan-500 py-3 w-20 mt-1 text-xl tracking-wide leading-4 text-white">Login</button>
                             </form>
-                            <img class="py-1 px-2 w-20 bg-cover right-0 absolute" src="{{ asset('assets/img/bulat.png') }}" />
+                            <img class="py-1 px-2 w-20 bg-cover right-0 absolute" src="{{ asset('assets/img/bulatindex.png') }}" />
                         </div>
                     </div>
                 </div>

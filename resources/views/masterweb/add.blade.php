@@ -68,8 +68,9 @@
                 </div>
 
                 <div class="p-2 bg-white text-dark mb-5 rounded shadow bg-body">
+                    <span id="showalrtapiadd" class="d-none"></span>
+                    
                     <form onsubmit="return addinformasi(event)" >
-                        
                     <div class="mb-5 w-100 d-inline-block">
                         <div class="bg-white bg-body shadow-sm d-inline w-50 p-2 float-end rounded">
                             <h4>List Url :</h4>
@@ -91,7 +92,7 @@
                         <div class="row mb-3">
                             <div class="col-12 col-lg-6">
                                 <label for="namapt" class="form-label">Nama Perusaaan</label>
-                                <input type="text" class="form-control" id="namapt" placeholder="Masukan nama perusaaan" name="namapt" />
+                                <input type="text" class="form-control" id="namapt" placeholder="Masukan nama perusaaan" name="namapt" required/>
                             </div>
                             <div class="col col-lg-6">
                                 <label for="statuspt" class="form-label">Status Kebenaran</label>
@@ -104,7 +105,7 @@
                             </div>
                         </div>
                         <label class="form-label">Alamat Perusahaan</label>
-                        <textarea class="alamatpt mb-3" name="alamatpt"></textarea>
+                        <textarea class="alamatpt mb-3" name="alamatpt" required></textarea>
                         <button type="submit" class="btn btn-primary mt-3">Add</button>
                     </form>
                 </div>

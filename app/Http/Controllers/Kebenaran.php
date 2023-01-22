@@ -127,28 +127,9 @@ class Kebenaran extends Controller
     }
 
 
-    public function curl(Request $request)
+    public function Getapi(Request $request)
     {
-        $search = htmlentities($request->input('gugel'));
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://google.serper.dev/search',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => '{"q":"' . $search . '","gl":"id","hl":"id","autocorrect":true}',
-            CURLOPT_HTTPHEADER => array(
-                'X-API-KEY: 1702350c579658e5fe69187632c930e96d5ad0e3',
-                'Content-Type: application/json',
-            )
-        ));
-        $eks = curl_exec($curl);
-        curl_close($curl);
-        return json_encode($eks);
+       return eval(base64_decode('ICRkYiA9IERCOjp0YWJsZSgnYXBpa2V5cycpLT5zZWxlY3QoImFwaSIpLT5nZXQoKTsKICAgICAgICBmb3JlYWNoICgkZGIgYXMgJHJlc2FwaSk7CiAgICAgICAgJHNlYXJjaCA9IGh0bWxlbnRpdGllcygkcmVxdWVzdC0+aW5wdXQoJ2d1Z2VsJykpOwogICAgICAgICRjdXJsID0gY3VybF9pbml0KCk7CiAgICAgICAgY3VybF9zZXRvcHRfYXJyYXkoJGN1cmwsIGFycmF5KAogICAgICAgICAgICBDVVJMT1BUX1VSTCA9PiAnaHR0cHM6Ly9nb29nbGUuc2VycGVyLmRldi9zZWFyY2gnLAogICAgICAgICAgICBDVVJMT1BUX1JFVFVSTlRSQU5TRkVSID0+IHRydWUsCiAgICAgICAgICAgIENVUkxPUFRfRU5DT0RJTkcgPT4gJycsCiAgICAgICAgICAgIENVUkxPUFRfTUFYUkVESVJTID0+IDEwLAogICAgICAgICAgICBDVVJMT1BUX1RJTUVPVVQgPT4gMCwKICAgICAgICAgICAgQ1VSTE9QVF9GT0xMT1dMT0NBVElPTiA9PiB0cnVlLAogICAgICAgICAgICBDVVJMT1BUX0hUVFBfVkVSU0lPTiA9PiBDVVJMX0hUVFBfVkVSU0lPTl8xXzEsCiAgICAgICAgICAgIENVUkxPUFRfQ1VTVE9NUkVRVUVTVCA9PiAnUE9TVCcsCiAgICAgICAgICAgIENVUkxPUFRfUE9TVEZJRUxEUyA9PiAneyJxIjoiJyAuICRzZWFyY2ggLiAnIiwiZ2wiOiJpZCIsImhsIjoiaWQiLCJhdXRvY29ycmVjdCI6dHJ1ZX0nLAogICAgICAgICAgICBDVVJMT1BUX0hUVFBIRUFERVIgPT4gYXJyYXkoCiAgICAgICAgICAgICAgICAnWC1BUEktS0VZOiAnLiRyZXNhcGktPmFwaSwKICAgICAgICAgICAgICAgICdDb250ZW50LVR5cGU6IGFwcGxpY2F0aW9uL2pzb24nLAogICAgICAgICAgICApCiAgICAgICAgKSk7CiAgICAgICAgJGVrcyA9IGN1cmxfZXhlYygkY3VybCk7CiAgICAgICAgY3VybF9jbG9zZSgkY3VybCk7CiAgICAgICAgaWYgKCRla3MgIT09IHRydWUpIHsKICAgICAgICAgICAgcmV0dXJuIGpzb25fZW5jb2RlKCRla3MpOwogICAgICAgIH0='));
     }
 
     // fungsi filter string input
@@ -177,16 +158,6 @@ class Kebenaran extends Controller
     // add alammmat lowongan
     public function AddAlamat(Request $request)
     {
-        $valid = Validator::make($request->all(), [
-            "link" => "required|url",
-            "titlelink" => "required",
-            "judul" => "required|min:10",
-            "statusloker" => "required",
-            "alamatpt" => "required",
-        ]);
-        if ($valid->fails()) {
-            return response()->json(["status" => 300]);
-        }
         $url = $this->filterString($request->input("link"));
         $titleurl = $this->filterString($request->input("titlelink"));
         $judul = $this->filterString($request->input("judul"));
@@ -194,6 +165,9 @@ class Kebenaran extends Controller
         $alamat = $this->filterString(strtolower($request->input("alamatpt")));
         $alamatadd = str_replace(array('&', '<p>','</p>','*','<script>','</script>',';','<','>'), array(''), $alamat);
         $cek = DB::table('alamat_perusahaans')->where('alamat', '=', $alamatadd)->count();
+        if ($titleurl == '' || $url == '') {
+            return response()->json(["status" => 300]);
+        }
         if ($request->isMethod("POST")) {
             if ($cek > 0) {
                 return response()->json(["status" => 400]);
@@ -271,5 +245,60 @@ class Kebenaran extends Controller
                 return response()->json(["status" => "berhasil"]);
             }
         }
+    }
+    public function Api()
+    {
+        $title = "Api Key";
+        $key = DB::table('apikeys')->select("api")->get();
+        foreach ($key as $key => $data) {
+            $resdata = Hash::make($data->api);
+            $hilang = substr($resdata,3,-15);
+        }
+        $pisahstring ="";
+        for ($i=0; $i < 30 ; $i++) { 
+            $pisaha = rand(3,$i-1);
+            $pisahstring .= $hilang[$pisaha];
+        }
+        $urla = array(
+            "https://api.serper.dev/stats/dashboard",
+            "https://api.serper.dev/users/api-key",
+        );
+        $mh = curl_multi_init();
+        $api = "";
+        
+        return view("masterweb.api",compact("title","pisahstring","api"));
+    }
+
+    // update key api search
+    public function Updateapikey(Request $request)
+    {
+        $valid = Validator::make($request->all(),[
+            "api"=>"required",
+        ]);
+        $filter = $this->filterString($request->input('api'));
+        $update = DB::table('apikeys')->where('id_api',1)->update([
+            "api"=>$filter,
+        ]);
+        Alert::success('Berhasil', 'Berhasil Update Api Key');
+        return redirect('api');
+    }
+
+    public function Loginapikey(Request $request)
+    {
+        $data = array(
+            "email"=>$this->filterString($request->input('email')),
+            "password"=>$this->filterString($request->input('password')),
+        );
+        $ch = curl_init();
+        curl_setopt($ch,CURLOPT_URL,"https://api.serper.dev/auth/login");
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($ch,CURLOPT_POSTFIELDS,http_build_query($data));
+        curl_setopt($ch,CURLOPT_FOLLOWLOCATION,0);
+        curl_setopt($ch,CURLOPT_REFERER,0);
+        curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"POST");
+        curl_setopt($ch,CURLOPT_COOKIEJAR,'assets/cookie.txt');
+        $api = curl_exec($ch);
+        curl_close($ch);
+        return json_encode($api);
     }
 }

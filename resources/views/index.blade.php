@@ -35,14 +35,14 @@
               </ul>
         </nav>
 
-        <div class="mb-10 md:mb-2 min-h-screen relative ">
-           <div class="relative inline">
+        <div class="mb-10 md:mb-2 min-h-screen relative">
+           <div class="relative inline-block">
                 <header>
                     <img src="{{ asset('assets/img/8.png') }}" class="max-w-full h-auto"/>
                 </header>
-               <div class="absolute top-10 w-full">
+               <div class="top-10 w-full absolute ">
                     <div class="grid grid-cols-1 gap-4 w-full md:grid-cols-2 content-center">
-                        <div class="block">
+                        <div class="relative">
                             <header class="w-24 left-5 overflow-hidden mt-5 mb-1">
                                 <img src="{{asset('assets/img/bulatindex.png')}}" alt="" class="mt-11 h-20 right-8 relative">
                             </header>
@@ -172,7 +172,7 @@
                 </div>
             </div>
         </div>
-
+        
         <div class="mb-5 p-3 bg-zinc-100" id="cek">
             <h1 class="capitalize text-center leading-10 tracking-tight text-4xl font-bold font-ubuntu mb-5">Cek kebenaran alamat<br> lowongan kerja</h1>
             <div class="relative w-4/6 mx-auto p-1 block mb-10">
@@ -181,18 +181,18 @@
             </div>
             <div class="w-11/12 mx-auto p-1 px-2 alamatshow hidden">
                 <div class="bg-white shadow-lg hover:shadow-xl rounded-md overflow-hidden">
-                    <table class="table flex table-auto w-full leading-normal">
+                    <table class="table flex table- w-full leading-normal">
                         <thead class="uppercase text-gray-600 text-xs font-semibold bg-gray-200">
-                            <tr class="hidden md:table-row">
-                            <th class="text-left p-3">
-                                <p>Nama Perusahaan</p>
-                            </th>
-                            <th class="text-left p-3">
-                                <p>Alamat</p>
-                            </th>
-                            <th class="text-right p-3">
-                                <p>Status</p>
-                            </th>
+                            <tr>
+                                <th class="text-left p-3">
+                                    <p>Nama Perusahaan</p>
+                                </th>
+                                <th class="text-left p-3">
+                                    <p>Alamat</p>
+                                </th>
+                                <th class="text-right p-3">
+                                    <p>Status</p>
+                                </th>
                             </tr>
                         </thead>
                         <tbody class="flex-1 text-gray-700 sm:flex-none showalamat p-2" id="showalamat">
@@ -201,7 +201,7 @@
                 </div>           
             </div>
         </div>
-
+        
         <div class="mb-5 relative bg-gray-50 p-2" id="lapor">
             <div class="w-11/12 mx-auto">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -254,6 +254,7 @@
         </div>
         <hr>
         <footer class="bg-slate-200 text-zinc-700 font-xl tracking-widest leading-4 mt-3 text-center p-5 font-ubuntu">&copy;Kebenaran</footer>
+        
     </div>
     <script src="{{ asset('vendor/bower_components/jquery/dist/jquery.min.js')}}"></script>
     
