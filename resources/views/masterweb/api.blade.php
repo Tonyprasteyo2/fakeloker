@@ -124,12 +124,6 @@
                                     <section class="mt-4">
                                         <label>Api Key</label>
                                         <input type="text" readonly id="lihatapikey" class="form-control w-50">
-                                        <?php
-                                        var_dump($te);
-                                        ;?>
-                                        
-
-
                                     </section>
                                 </div>
                             </div>
@@ -153,7 +147,13 @@
 
     @include('sweetalert::alert')
     <script>
-      
+      let data = JSON.parse('<?php echo $api[0];?>',true);
+      let dataa = JSON.parse('<?php echo $api[1];?>',true);
+      document.getElementById('kredit').innerHTML = data.creditBalance;
+      document.getElementById('gunakanapi').innerHTML = data.totalUsage;
+      let api = dataa.apiKey
+      document.getElementById('lihatapikey').value = api;
+
     </script>
     
 </body>

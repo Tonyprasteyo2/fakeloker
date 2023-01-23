@@ -567,6 +567,9 @@ video {
 .z-50 {
   z-index: 50;
 }
+.col-auto {
+  grid-column: auto;
+}
 .float-right {
   float: right;
 }
@@ -789,9 +792,6 @@ video {
 }
 .flex-1 {
   flex: 1 1 0%;
-}
-.table-auto {
-  table-layout: auto;
 }
 .cursor-pointer {
   cursor: pointer;
@@ -1181,6 +1181,10 @@ video {
   --tw-text-opacity: 1;
   color: rgb(107 114 128 / var(--tw-text-opacity));
 }
+.text-gray-800 {
+  --tw-text-opacity: 1;
+  color: rgb(31 41 55 / var(--tw-text-opacity));
+}
 .underline {
   text-decoration-line: underline;
 }
@@ -1434,10 +1438,6 @@ video {
 
   .md\:flex {
     display: flex;
-  }
-
-  .md\:table-row {
-    display: table-row;
   }
 
   .md\:hidden {

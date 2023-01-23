@@ -246,6 +246,7 @@ class Kebenaran extends Controller
             }
         }
     }
+
     public function Api()
     {
         $title = "Api Key";
@@ -259,13 +260,31 @@ class Kebenaran extends Controller
             $pisaha = rand(3,$i-1);
             $pisahstring .= $hilang[$pisaha];
         }
-        $urla = array(
+        $site = array(
             "https://api.serper.dev/stats/dashboard",
             "https://api.serper.dev/users/api-key",
         );
         $mh = curl_multi_init();
-        $api = "";
-        
+        // $api = ;
+        foreach ($site as $i => $url) {
+            $ch[$i] = curl_init();
+            curl_setopt($ch[$i],CURLOPT_URL,$url);
+            curl_setopt($ch[$i],CURLOPT_CUSTOMREQUEST,"GET");
+            curl_setopt($ch[$i],CURLOPT_RETURNTRANSFER,1);
+            curl_setopt($ch[$i],CURLOPT_COOKIEFILE,'assets/cookie.txt');
+            curl_multi_add_handle($mh,$ch[$i]);
+        }
+        do {
+            curl_multi_exec($mh,$run);
+        } while ($run);
+        foreach ($site as $i => $url) {
+            $kontenisi = curl_multi_getcontent($ch[$i]);
+            $apia[] = $kontenisi;
+            curl_multi_remove_handle($mh,$ch[$i]);
+            curl_close($ch[$i]);
+        }
+        $api = json_decode(json_encode($apia),true);
+        curl_multi_close($mh);
         return view("masterweb.api",compact("title","pisahstring","api"));
     }
 

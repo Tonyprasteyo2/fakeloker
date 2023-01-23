@@ -480,7 +480,7 @@ $(".updateinformasialamat").submit(function (e) {
 });
 const showapi = ()=>{
     $(".webapi").addClass("d-none");
-    document.getElementById("showwebapi").innerHTML = "<div class='container mx-auto p-2 w-50'><h3 class='mb-3'>Login In Api<form method='POST' onsubmit='loginapikey(event);'><div class='form-floating mb-3 mt-3'><input type='email' class='form-control'placeholder='Masukan Email Anda' id='email'><label for='email'>Email</label></div><div class='form-floating mb-3 mt-3'><input type='text' class='form-control'placeholder='Masukan Password Anda' id='password'><label for='password'>Password</label></div><button type='submit' class='btn btn-primary'>Login Api</button</form></div>";
+    document.getElementById("showwebapi").innerHTML = "<div class='container mx-auto p-2 w-50'><div class='alert alert-danger d-none' id='alertloginapi' role='alert'>Gagal,Silakan hubungin admin</div><h3 class='mb-3'>Login In Api<form method='POST' onsubmit='loginapikey(event);'><div class='form-floating mb-3 mt-3'><input type='email' class='form-control'placeholder='Masukan Email Anda' id='email'><label for='email'>Email</label></div><div class='form-floating mb-3 mt-3'><input type='text' class='form-control'placeholder='Masukan Password Anda' id='password'><label for='password'>Password</label></div><button type='submit' class='btn btn-primary'>Login Api</button</form></div>";
 }
 const loginapikey = (e)=>{
     e.preventDefault();
@@ -501,8 +501,8 @@ const loginapikey = (e)=>{
             dataType: "json",
             success: function (res) {
                 let result = JSON.parse(res);
-                if (result.statusCode === 404) {
-                    console.log(result);
+                if (result.statusCode == 404) {
+                   document.getElementById('alertloginapi').classList.remove('d-none');
                 }else{
                     document.getElementById('showwebapi').className = "d-none";
                     let homeapi = document.getElementById('showwebapidata');
