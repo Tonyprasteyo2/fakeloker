@@ -84,6 +84,7 @@
                            <header id="showwebapidata" class="d-none">
                             <div class='container p-2 py-2'>
                                 <h2 class='text-center text-capitalize'>selamat datang</h2>
+                                <p class="text-center fs-5 text-capitalize">Apabila data tidak muncul,silakan refresh dan login kembali</p>
                                 <div class='mt-3 container mx-auto '>
                                     <div class='row'>
                                         <div class='col-lg-6 col-12 text-white'>
@@ -123,11 +124,26 @@
                                     </div>
                                     <section class="mt-4">
                                         <label>Api Key</label>
-                                        <input type="text" readonly id="lihatapikey" class="form-control w-50">
+                                        {{-- <input type="text" readonly id="lihatapikey" class="form-control w-50"> --}}
                                     </section>
                                 </div>
                             </div>
                            </header>
+                        </div>
+                        
+                        <h5 class="fs-5">Api Key</h5>
+                        <div class="shadow p-3 mb-5 bg-white rounded w-50 position-relative">
+                            <div class="mb-2 position-relative">
+                                <section class="position-absolute h-auto p-2 d-inline-flex align-items-center" style="z-index: 100;right:20px;cursor: pointer;">
+                                    <i class="fa fa-eye" style="font-size: 20px;" onclick="showpas()"></i>
+                                </section>
+                                <input type="text" id="lihatapikey" class="form-control position-relative">
+                                <input type="hidden" value="awa" class="apakey">
+                            </div>
+                            <div class="p-1">
+                                <button class="btn btn-secondary text-white" onclick="copy()">Copy</button>
+                                <button class="btn btn-success text-white">Reset</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -152,7 +168,7 @@
       document.getElementById('kredit').innerHTML = data.creditBalance;
       document.getElementById('gunakanapi').innerHTML = data.totalUsage;
       let api = dataa.apiKey
-      document.getElementById('lihatapikey').value = api;
+    // document.getElementById('lihatapikey').value = api;
 
     </script>
     

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
+
 class Kebenaran extends Controller
 {
     // login prosess
@@ -129,7 +130,7 @@ class Kebenaran extends Controller
 
     public function Getapi(Request $request)
     {
-       return eval(base64_decode('ICRkYiA9IERCOjp0YWJsZSgnYXBpa2V5cycpLT5zZWxlY3QoImFwaSIpLT5nZXQoKTsKICAgICAgICBmb3JlYWNoICgkZGIgYXMgJHJlc2FwaSk7CiAgICAgICAgJHNlYXJjaCA9IGh0bWxlbnRpdGllcygkcmVxdWVzdC0+aW5wdXQoJ2d1Z2VsJykpOwogICAgICAgICRjdXJsID0gY3VybF9pbml0KCk7CiAgICAgICAgY3VybF9zZXRvcHRfYXJyYXkoJGN1cmwsIGFycmF5KAogICAgICAgICAgICBDVVJMT1BUX1VSTCA9PiAnaHR0cHM6Ly9nb29nbGUuc2VycGVyLmRldi9zZWFyY2gnLAogICAgICAgICAgICBDVVJMT1BUX1JFVFVSTlRSQU5TRkVSID0+IHRydWUsCiAgICAgICAgICAgIENVUkxPUFRfRU5DT0RJTkcgPT4gJycsCiAgICAgICAgICAgIENVUkxPUFRfTUFYUkVESVJTID0+IDEwLAogICAgICAgICAgICBDVVJMT1BUX1RJTUVPVVQgPT4gMCwKICAgICAgICAgICAgQ1VSTE9QVF9GT0xMT1dMT0NBVElPTiA9PiB0cnVlLAogICAgICAgICAgICBDVVJMT1BUX0hUVFBfVkVSU0lPTiA9PiBDVVJMX0hUVFBfVkVSU0lPTl8xXzEsCiAgICAgICAgICAgIENVUkxPUFRfQ1VTVE9NUkVRVUVTVCA9PiAnUE9TVCcsCiAgICAgICAgICAgIENVUkxPUFRfUE9TVEZJRUxEUyA9PiAneyJxIjoiJyAuICRzZWFyY2ggLiAnIiwiZ2wiOiJpZCIsImhsIjoiaWQiLCJhdXRvY29ycmVjdCI6dHJ1ZX0nLAogICAgICAgICAgICBDVVJMT1BUX0hUVFBIRUFERVIgPT4gYXJyYXkoCiAgICAgICAgICAgICAgICAnWC1BUEktS0VZOiAnLiRyZXNhcGktPmFwaSwKICAgICAgICAgICAgICAgICdDb250ZW50LVR5cGU6IGFwcGxpY2F0aW9uL2pzb24nLAogICAgICAgICAgICApCiAgICAgICAgKSk7CiAgICAgICAgJGVrcyA9IGN1cmxfZXhlYygkY3VybCk7CiAgICAgICAgY3VybF9jbG9zZSgkY3VybCk7CiAgICAgICAgaWYgKCRla3MgIT09IHRydWUpIHsKICAgICAgICAgICAgcmV0dXJuIGpzb25fZW5jb2RlKCRla3MpOwogICAgICAgIH0='));
+        return eval(base64_decode('ICRkYiA9IERCOjp0YWJsZSgnYXBpa2V5cycpLT5zZWxlY3QoImFwaSIpLT5nZXQoKTsKICAgICAgICBmb3JlYWNoICgkZGIgYXMgJHJlc2FwaSk7CiAgICAgICAgJHNlYXJjaCA9IGh0bWxlbnRpdGllcygkcmVxdWVzdC0+aW5wdXQoJ2d1Z2VsJykpOwogICAgICAgICRjdXJsID0gY3VybF9pbml0KCk7CiAgICAgICAgY3VybF9zZXRvcHRfYXJyYXkoJGN1cmwsIGFycmF5KAogICAgICAgICAgICBDVVJMT1BUX1VSTCA9PiAnaHR0cHM6Ly9nb29nbGUuc2VycGVyLmRldi9zZWFyY2gnLAogICAgICAgICAgICBDVVJMT1BUX1JFVFVSTlRSQU5TRkVSID0+IHRydWUsCiAgICAgICAgICAgIENVUkxPUFRfRU5DT0RJTkcgPT4gJycsCiAgICAgICAgICAgIENVUkxPUFRfTUFYUkVESVJTID0+IDEwLAogICAgICAgICAgICBDVVJMT1BUX1RJTUVPVVQgPT4gMCwKICAgICAgICAgICAgQ1VSTE9QVF9GT0xMT1dMT0NBVElPTiA9PiB0cnVlLAogICAgICAgICAgICBDVVJMT1BUX0hUVFBfVkVSU0lPTiA9PiBDVVJMX0hUVFBfVkVSU0lPTl8xXzEsCiAgICAgICAgICAgIENVUkxPUFRfQ1VTVE9NUkVRVUVTVCA9PiAnUE9TVCcsCiAgICAgICAgICAgIENVUkxPUFRfUE9TVEZJRUxEUyA9PiAneyJxIjoiJyAuICRzZWFyY2ggLiAnIiwiZ2wiOiJpZCIsImhsIjoiaWQiLCJhdXRvY29ycmVjdCI6dHJ1ZX0nLAogICAgICAgICAgICBDVVJMT1BUX0hUVFBIRUFERVIgPT4gYXJyYXkoCiAgICAgICAgICAgICAgICAnWC1BUEktS0VZOiAnLiRyZXNhcGktPmFwaSwKICAgICAgICAgICAgICAgICdDb250ZW50LVR5cGU6IGFwcGxpY2F0aW9uL2pzb24nLAogICAgICAgICAgICApCiAgICAgICAgKSk7CiAgICAgICAgJGVrcyA9IGN1cmxfZXhlYygkY3VybCk7CiAgICAgICAgY3VybF9jbG9zZSgkY3VybCk7CiAgICAgICAgaWYgKCRla3MgIT09IHRydWUpIHsKICAgICAgICAgICAgcmV0dXJuIGpzb25fZW5jb2RlKCRla3MpOwogICAgICAgIH0='));
     }
 
     // fungsi filter string input
@@ -160,28 +161,30 @@ class Kebenaran extends Controller
     {
         $url = $this->filterString($request->input("link"));
         $titleurl = $this->filterString($request->input("titlelink"));
+        $id =  uniqid();
         $judul = $this->filterString($request->input("judul"));
         $status = $this->filterString($request->input("statusloker"));
-        $alamat = $this->filterString(strtolower($request->input("alamatpt")));
-        $alamatadd = str_replace(array('&', '<p>','</p>','*','<script>','</script>',';','<','>'), array(''), $alamat);
+        $alamat = $this->filterString(strtolower($request->input("alamat")));
+        $alamatadd = str_replace(array('&', '<p>', '</p>', '*', '<script>', '</script>', ';', '<', '>'), array(''), $alamat);
         $cek = DB::table('alamat_perusahaans')->where('alamat', '=', $alamatadd)->count();
-        if ($titleurl == '' || $url == '') {
-            return response()->json(["status" => 300]);
+        $valid = Validator::make($request->all(),[
+            "alamat"=>'required|unique:alamat_perusahaans',
+        ]);
+        if ($valid->fails()) {
+            return response()->json(["status" => 400]);
+        }else {
+            DB::table('alamat_perusahaans')->insert([
+                'id'=>$id,
+                'nama_perusahaan' => $judul,
+                'alamat' => $alamatadd,
+                'url' => $url,
+                'status' => $status,
+                'title_judul' => $titleurl,
+            ]);
+            return response()->json(["status" => 200]);
         }
-        if ($request->isMethod("POST")) {
-            if ($cek > 0) {
-                return response()->json(["status" => 400]);
-            } else {
-                DB::table('alamat_perusahaans')->insert([
-                    'nama_perusahaan' => $judul,
-                    'alamat' => $alamatadd,
-                    'url' => $url,
-                    'status' => $status,
-                    'title_judul' => $titleurl,
-                ]);
-                return response()->json(["status" => 200]);
-            }
-        }
+        
+        
     }
 
     // view alamat perusahaan
@@ -202,9 +205,8 @@ class Kebenaran extends Controller
     // view edit alamat
     public function Editalamat($id)
     {
-        $id = $this->filterString($id);
-        $pisah = substr($id, -14, 1);
-        $datadb = DB::table('alamat_perusahaans')->where('id', '=', $pisah)->get();
+        $id = addslashes($id);
+        $datadb = DB::table('alamat_perusahaans')->where('id', '=', $id)->get();
         $title = "Edit Informasi Alamat";
         return view('masterweb.editalamat', compact("title", "datadb"));
     }
@@ -218,18 +220,18 @@ class Kebenaran extends Controller
         $urledit = $this->filterString($request->input("urledit"));
         $alamatedit = $this->filterString(strtolower($request->input("alamatedit")));
         $statusedit = $this->filterString($request->input("status"));
-        $valid = Validator::make($request->all(), [
-            "juduledit" => "required",
-            "titlebaru" => "required",
-            "urledit" => "required|url",
-            "alamatedit" => "required",
-        ]);
-        if ($valid->fails()) {
-            return response()->json([
-                "status" => "gagalform",
-            ]);
-        }
-        $alamatedithasil = str_replace(array('&', '<p>','</p>','*','<script>','</script>',';','<','>'), array(''), $alamatedit);
+        // $valid = Validator::make($request->all(), [
+        //     "juduledit" => "required",
+        //     "titlebaru" => "required",
+        //     "urledit" => "required|url",
+        //     "alamatedit" => "required",
+        // ]);
+        // if ($valid->fails()) {
+        //     return response()->json([
+        //         "status" => "gagalform",
+        //     ]);
+        // }
+        $alamatedithasil = str_replace(array('&', '<p>', '</p>', '*', '<script>', '</script>', ';', '<', '>'), array(''), $alamatedit);
         $cekalamatbaru = DB::table('alamat_perusahaans')->where('alamat', '=', $alamatedithasil)->count();
         if ($request->isMethod('POST')) {
             if ($cekalamatbaru > 0) {
@@ -253,11 +255,11 @@ class Kebenaran extends Controller
         $key = DB::table('apikeys')->select("api")->get();
         foreach ($key as $key => $data) {
             $resdata = Hash::make($data->api);
-            $hilang = substr($resdata,3,-15);
+            $hilang = substr($resdata, 3, -15);
         }
-        $pisahstring ="";
-        for ($i=0; $i < 30 ; $i++) { 
-            $pisaha = rand(3,$i-1);
+        $pisahstring = "";
+        for ($i = 0; $i < 30; $i++) {
+            $pisaha = rand(3, $i - 1);
             $pisahstring .= $hilang[$pisaha];
         }
         $site = array(
@@ -268,35 +270,35 @@ class Kebenaran extends Controller
         // $api = ;
         foreach ($site as $i => $url) {
             $ch[$i] = curl_init();
-            curl_setopt($ch[$i],CURLOPT_URL,$url);
-            curl_setopt($ch[$i],CURLOPT_CUSTOMREQUEST,"GET");
-            curl_setopt($ch[$i],CURLOPT_RETURNTRANSFER,1);
-            curl_setopt($ch[$i],CURLOPT_COOKIEFILE,'assets/cookie.txt');
-            curl_multi_add_handle($mh,$ch[$i]);
+            curl_setopt($ch[$i], CURLOPT_URL, $url);
+            curl_setopt($ch[$i], CURLOPT_CUSTOMREQUEST, "GET");
+            curl_setopt($ch[$i], CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch[$i], CURLOPT_COOKIEFILE, 'assets/cookie.txt');
+            curl_multi_add_handle($mh, $ch[$i]);
         }
         do {
-            curl_multi_exec($mh,$run);
+            curl_multi_exec($mh, $run);
         } while ($run);
         foreach ($site as $i => $url) {
             $kontenisi = curl_multi_getcontent($ch[$i]);
             $apia[] = $kontenisi;
-            curl_multi_remove_handle($mh,$ch[$i]);
+            curl_multi_remove_handle($mh, $ch[$i]);
             curl_close($ch[$i]);
         }
-        $api = json_decode(json_encode($apia),true);
+        $api = json_decode(json_encode($apia), true);
         curl_multi_close($mh);
-        return view("masterweb.api",compact("title","pisahstring","api"));
+        return view("masterweb.api", compact("title", "pisahstring", "api"));
     }
 
     // update key api search
     public function Updateapikey(Request $request)
     {
-        $valid = Validator::make($request->all(),[
-            "api"=>"required",
+        $valid = Validator::make($request->all(), [
+            "api" => "required",
         ]);
         $filter = $this->filterString($request->input('api'));
-        $update = DB::table('apikeys')->where('id_api',1)->update([
-            "api"=>$filter,
+        $update = DB::table('apikeys')->where('id_api', 1)->update([
+            "api" => $filter,
         ]);
         Alert::success('Berhasil', 'Berhasil Update Api Key');
         return redirect('api');
@@ -305,19 +307,20 @@ class Kebenaran extends Controller
     public function Loginapikey(Request $request)
     {
         $data = array(
-            "email"=>$this->filterString($request->input('email')),
-            "password"=>$this->filterString($request->input('password')),
+            "email" => $this->filterString($request->input('email')),
+            "password" => $this->filterString($request->input('password')),
         );
         $ch = curl_init();
-        curl_setopt($ch,CURLOPT_URL,"https://api.serper.dev/auth/login");
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-        curl_setopt($ch,CURLOPT_POSTFIELDS,http_build_query($data));
-        curl_setopt($ch,CURLOPT_FOLLOWLOCATION,0);
-        curl_setopt($ch,CURLOPT_REFERER,0);
-        curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"POST");
-        curl_setopt($ch,CURLOPT_COOKIEJAR,'assets/cookie.txt');
+        curl_setopt($ch, CURLOPT_URL, "https://api.serper.dev/auth/login");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
+        curl_setopt($ch, CURLOPT_REFERER, 0);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_COOKIEJAR, 'assets/cookie.txt');
         $api = curl_exec($ch);
         curl_close($ch);
         return json_encode($api);
     }
+
 }

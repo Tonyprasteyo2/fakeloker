@@ -326,9 +326,9 @@ const addinformasi = (e) => {
     ptname = ptname.split(" ").map(
         (ptname)=> ptname.substring(0,1).toUpperCase() + ptname.slice(1)
     ).join(" ");
-    if (statusLoker == "") {
+    if (statusLoker == "" || titlegugel == "" || judulpt  == "" ) {
         Swal.fire({
-            icon: "warning",
+            icon: "info",
             text: "Form Harus Terisi",
             timer: 2500,
             showConfirmButton: false
@@ -341,27 +341,23 @@ const addinformasi = (e) => {
                 _token: $('meta[name="csrf-token"]').attr("content"),
                 'judul': ptname,
                 'statusloker': statusLoker,
-                'alamatpt': alamatpt,
+                'alamat': alamatpt,
                 'titlelink': titlegugel,
                 'link': linkkebenaran,
 
             },
             dataType: "json",
             success: function (res) {
-                if (res.status === 300) {
-                    Swal.fire({
-                        icon: "warning",
-                        text: "Form Harus Terisi",
-                        timer: 2500,
-                        showConfirmButton: false
-                    });
-                }else if (res.status === 400) {
+                 if (res.status === 400) {
                     Swal.fire({
                         icon: "info",
                         text: "Alamat Sudah Ada",
                         timer: 2500,
                         showConfirmButton: false
                     });
+                    setTimeout(() => {
+                        location.reload();
+                    }, 3300);
                 }else{
                     Swal.fire({
                         icon: "success",
@@ -369,20 +365,24 @@ const addinformasi = (e) => {
                         timer: 2500,
                         showConfirmButton: false
                     });
-                    setTimeout(() => {
-                        location.reload();
-                    }, 2500);
+                    window.setTimeout( function(){
+                        window.location = "add";
+                    }, 3100 );
                 }
             }
         });
     }else{
         Swal.fire({
-            icon: "info",
+            icon: "danger",
             text: "Gagal add,Silakan coba kembali",
             timer: 2500,
             showConfirmButton: false
         });
     }
+    let tombol = document.getElementById('hilangsub');
+    tombol.addEventListener('click',function(){
+        tombol.parentNode.removeChild(tombol)
+    })
 }
 
 // delete informasi
@@ -478,10 +478,14 @@ $(".updateinformasialamat").submit(function (e) {
         });
     }
 });
+
+
 const showapi = ()=>{
     $(".webapi").addClass("d-none");
     document.getElementById("showwebapi").innerHTML = "<div class='container mx-auto p-2 w-50'><div class='alert alert-danger d-none' id='alertloginapi' role='alert'>Gagal,Silakan hubungin admin</div><h3 class='mb-3'>Login In Api<form method='POST' onsubmit='loginapikey(event);'><div class='form-floating mb-3 mt-3'><input type='email' class='form-control'placeholder='Masukan Email Anda' id='email'><label for='email'>Email</label></div><div class='form-floating mb-3 mt-3'><input type='text' class='form-control'placeholder='Masukan Password Anda' id='password'><label for='password'>Password</label></div><button type='submit' class='btn btn-primary'>Login Api</button</form></div>";
 }
+
+
 const loginapikey = (e)=>{
     e.preventDefault();
     let emailapi = document.getElementById('email').value;

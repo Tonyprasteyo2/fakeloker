@@ -70,19 +70,19 @@
                 <div class="p-2 bg-white text-dark mb-5 rounded shadow bg-body">
                     <span id="showalrtapiadd" class="d-none"></span>
                     
-                    <form onsubmit="return addinformasi(event)" >
+                    <form onsubmit="return addinformasi(event)">
                     <div class="mb-5 w-100 d-inline-block">
                         <div class="bg-white bg-body shadow-sm d-inline w-50 p-2 float-end rounded">
                             <h4>List Url :</h4>
                             <div class="row">
                                 <div class="col-6 col-lg-6">
                                     <label class="form-label">Pilih Judul Url</label>
-                                    <select class="form-control" id="judul_title" name="judul_title" >
+                                    <select class="form-control" id="judul_title" name="judul_title" required>
                                     </select>
                                 </div>
                                 <div class="col-6 col-lg-6">
                                     <label class="form-label">Url</label>
-                                    <select class="form-control" id="url_web_kebenaran" name="urlpt">
+                                    <select class="form-control" id="url_web_kebenaran" name="urlpt" required>
                                     </select>
                                 </div>
                             </div>
@@ -106,7 +106,7 @@
                         </div>
                         <label class="form-label">Alamat Perusahaan</label>
                         <textarea class="alamatpt mb-3" name="alamatpt" required></textarea>
-                        <button type="submit" class="btn btn-primary mt-3">Add</button>
+                        <button type="submit" class="btn btn-primary mt-3" id="hilangsub">Add</button>
                     </form>
                 </div>
             </div>
@@ -130,6 +130,8 @@
         width:'100%',
         resize:true
     });
+    CKEDITOR.instances.alamatpt.setData("isi alamat anda");
+    CKEDITOR.instances.alamatpt.updateElement();
     </script>
     
 

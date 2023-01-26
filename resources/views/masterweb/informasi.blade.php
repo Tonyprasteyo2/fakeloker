@@ -35,7 +35,7 @@
                         <div class="d-md-flex">
                             <ol class="breadcrumb ms-auto">
                                 <li class="breadcrumb-item"><a href="masterweb">Dashboard</a></li>
-                                <li class="active breadcrumb-item"><a href="add" class="fw-normal">{{ $title 
+                                <li class="active breadcrumb-item"><a href="{{ route('informasi') }}" class="fw-normal">{{ $title 
                                 }}</a></li>
                             </ol>
                         </div>
@@ -82,7 +82,7 @@
                                 </td>
                                 <td>
                                     <a id="{{ $informasi->id }}" onclick="deleteinformasi(this.id)" style="cursor: pointer;"><i class="fa fa-trash"></i></a>
-                                    <a href="editalamat/<?php echo uniqid($informasi->id) ;?>"><i class="fa fa-edit"></i></a>
+                                    <a href="editalamat/<?php echo $informasi->id ;?>"><i class="fa fa-edit"></i></a>
                                 </td>
                             </tr>    
                             @endforeach

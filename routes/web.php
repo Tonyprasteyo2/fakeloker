@@ -28,7 +28,7 @@ Route::group(['middleware' =>['auth']],function (){
         Route::get('user',[Kebenaran::class,'UserData'])->name('user');
         Route::get('/search_gugel',[Kebenaran::class,'Getapi']);
         Route::post('addalamat',[Kebenaran::class,'AddAlamat'])->name('addalamat');
-        Route::get('add',[Kebenaran::class,'Informasi'])->name("add");
+        Route::get('/add',[Kebenaran::class,'Informasi'])->name("add");
         Route::get('informasi',[Kebenaran::class,'ViewInformasi'])->name("informasi");
         Route::delete('deletealamat/{id}',[Kebenaran::class,'Deletealamat'])->name('deletealamat');
         Route::get('editalamat/{id}',[Kebenaran::class,'Editalamat']);
@@ -36,6 +36,9 @@ Route::group(['middleware' =>['auth']],function (){
         Route::get('/api',[Kebenaran::class,'Api'])->name('api');
         Route::post('/updateapi',[Kebenaran::class,'Updateapikey'])->name('updateapi');
         Route::post('/apiloginkey',[Kebenaran::class,'Loginapikey']);
+        Route::get('/editalamat',function(){
+            return redirect('informasi');
+        });
     });
 });
 Route::get('letter',function(){
