@@ -329,7 +329,7 @@ const addinformasi = (e) => {
     if (statusLoker == "" || titlegugel == "" || judulpt  == "" ) {
         Swal.fire({
             icon: "info",
-            text: "Form Harus Terisi",
+            text: "Form Harus Terisii",
             timer: 2500,
             showConfirmButton: false
         });
@@ -344,7 +344,6 @@ const addinformasi = (e) => {
                 'alamat': alamatpt,
                 'titlelink': titlegugel,
                 'link': linkkebenaran,
-
             },
             dataType: "json",
             success: function (res) {
