@@ -166,7 +166,6 @@ class Kebenaran extends Controller
         $status = $this->filterString($request->input("statusloker"));
         $alamat = $this->filterString(strtolower($request->input("alamat")));
         $alamatadd = str_replace(array('&', '<p>', '</p>', '*', '<script>', '</script>', ';', '<', '>'), array(''), $alamat);
-        $cek = DB::table('alamat_perusahaans')->where('alamat', '=', $alamatadd)->count();
         $valid = Validator::make($request->all(),[
             "alamat"=>'required|unique:alamat_perusahaans',
         ]);
@@ -220,33 +219,8 @@ class Kebenaran extends Controller
         $urledit = $this->filterString($request->input("urledit"));
         $alamatedit = $this->filterString(strtolower($request->input("alamatedit")));
         $statusedit = $this->filterString($request->input("status"));
-        // $valid = Validator::make($request->all(), [
-        //     "juduledit" => "required",
-        //     "titlebaru" => "required",
-        //     "urledit" => "required|url",
-        //     "alamatedit" => "required",
-        // ]);
-        // if ($valid->fails()) {
-        //     return response()->json([
-        //         "status" => "gagalform",
-        //     ]);
-        // }
         $alamatedithasil = str_replace(array('&', '<p>', '</p>', '*', '<script>', '</script>', ';', '<', '>'), array(''), $alamatedit);
-        $cekalamatbaru = DB::table('alamat_perusahaans')->where('alamat', '=', $alamatedithasil)->count();
-        if ($request->isMethod('POST')) {
-            if ($cekalamatbaru > 0) {
-                return response()->json(["status" => "sama"]);
-            } else {
-                DB::table('alamat_perusahaans')->where('id', $idalamat)->update([
-                    "nama_perusahaan" => $editjudul,
-                    "alamat" => $alamatedithasil,
-                    "url" => $urledit,
-                    "status" => $statusedit,
-                    "title_judul" => $titleedit,
-                ]);
-                return response()->json(["status" => "berhasil"]);
-            }
-        }
+        
     }
 
     public function Api()
@@ -267,7 +241,6 @@ class Kebenaran extends Controller
             "https://api.serper.dev/users/api-key",
         );
         $mh = curl_multi_init();
-        // $api = ;
         foreach ($site as $i => $url) {
             $ch[$i] = curl_init();
             curl_setopt($ch[$i], CURLOPT_URL, $url);
@@ -322,5 +295,4 @@ class Kebenaran extends Controller
         curl_close($ch);
         return json_encode($api);
     }
-
 }

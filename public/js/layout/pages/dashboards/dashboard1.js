@@ -307,6 +307,7 @@ const carigugel = (e) => {
     }
 
 }
+
 const tutupalertsearch = ()=>{
     setTimeout(() => {
         document.getElementById("alert_search").remove();

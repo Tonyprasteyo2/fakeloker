@@ -30,6 +30,7 @@ $(document).ready(function () {
                             icon: "success",
                             timer: 3000,
                             title: response.judul,
+                            showConfirmButton: false
                         });
                         setTimeout(() => {
                             location.href = "masterweb";
@@ -39,6 +40,7 @@ $(document).ready(function () {
                             icon: "success",
                             timer: 3000,
                             title: response.judul,
+                            showConfirmButton: false
                         });
                         setTimeout(() => {
                             location.href = "member";

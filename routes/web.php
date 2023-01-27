@@ -43,7 +43,6 @@ Route::group(['middleware' =>['auth']],function (){
 });
 Route::get('letter',function(){
     return view('layout.letter');
-    
 });
 Route::get('/',[App\Http\Controllers\Homeindex::class, 'index'])->name('/');
 Route::get('/index',[App\Http\Controllers\Homeindex::class, 'index'])->name('index');

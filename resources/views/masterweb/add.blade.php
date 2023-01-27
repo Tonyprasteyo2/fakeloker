@@ -66,7 +66,6 @@
                         </form>                      
                     </div>
                 </div>
-
                 <div class="p-2 bg-white text-dark mb-5 rounded shadow bg-body">
                     <span id="showalrtapiadd" class="d-none"></span>
                     
@@ -88,7 +87,6 @@
                             </div>
                         </div>
                     </div>
-
                         <div class="row mb-3">
                             <div class="col-12 col-lg-6">
                                 <label for="namapt" class="form-label">Nama Perusaaan</label>
