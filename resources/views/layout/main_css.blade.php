@@ -9,6 +9,6 @@
     <!-- Custom CSS -->
     <link href="{{ asset('vendor/bower_components/chartist/dist/chartist.min.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css') }}" rel="stylesheet">
-
+    <link rel="icon" href="{{ asset('assets/img/kenali.png') }}" type="image/x-icon">
     <!-- Custom CSS -->
     <link href="{{asset('css/style.min.css')}}" rel="stylesheet">

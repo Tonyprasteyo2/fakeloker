@@ -36,7 +36,7 @@
                         <div class="d-md-flex">
                             <ol class="breadcrumb ms-auto">
                                 <li class="breadcrumb-item"><a href="{{ route('masterweb') }}">Dashboard</a></li>
-                                <li class="active breadcrumb-item"><a href="profil" class="fw-normal">Api Key</a></li>
+                                <li class="active breadcrumb-item"><a href="{{route('api')}}" class="fw-normal">Api Key</a></li>
                             </ol>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                                 Ubah Api Key
                             </button>
                             <button type="button" class="btn btn-primary mt-2 webapi" onclick="showapi()">
-                                Login Web Api
+                                Lihat Balance
                             </button>
                             <div class="form-group mt-4">
                                 <input type="text" class="form-control" value="{{$pisahstring}}" readonly >
@@ -93,12 +93,12 @@
                                                 <div class="row no-gutters align-items-center">
                                                     <div class="col mr-2">
                                                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                            Kredit Balance</div>
+                                                            Poin</div>
                                                         <div class="h5 mb-0 font-weight-bold text-gray-800" id="kredit">
                                                         </div>
                                                     </div>
                                                     <div class="col-auto">
-                                                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                                        <i class="far fa-money-bill-alt fa-2x text-gray-300"></i>
                                                     </div>
                                                 </div>
                                             </div>
@@ -110,12 +110,12 @@
                                                 <div class="row no-gutters align-items-center">
                                                     <div class="col mr-2">
                                                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                            Total Kredit digunakan</div>
+                                                            Total Poin digunakan</div>
                                                         <div class="h5 mb-0 font-weight-bold text-gray-800" id="gunakanapi">
                                                         </div>
                                                     </div>
                                                     <div class="col-auto">
-                                                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                                        <i class="fas fa-archive fa-2x text-gray-300"></i>
                                                     </div>
                                                 </div>
                                             </div>
@@ -123,28 +123,28 @@
                                         </div>
                                     </div>
                                     <section class="mt-4">
-                                        <label>Api Key</label>
-                                        {{-- <input type="text" readonly id="lihatapikey" class="form-control w-50"> --}}
+                                        
+                                        <h5 class="fs-5">Api Key</h5>
+                                        <div class="shadow p-3 mb-5 bg-white rounded w-50 position-relative">
+                                            <div class="mb-2 position-relative">
+                                                <section class="position-absolute h-auto p-2 d-inline-flex align-items-center" style="z-index: 100;right:20px;cursor: pointer;">
+                                                    <i class="fa fa-eye" style="font-size: 20px;" onclick="showpas()"></i>
+                                                </section>
+                                                <input type="password" id="lihatapikey" class="form-control position-relative">
+                                                <input type="hidden" value="awa" class="apakey">
+                                            </div>
+                                            <div class="p-1">
+                                                <button class="btn btn-secondary text-white" onclick="copy()">Copy</button>
+                                                <button class="btn btn-success text-white resetapi" >Reset</button>
+                                            </div>
+                                        </div>
+
                                     </section>
                                 </div>
                             </div>
                            </header>
                         </div>
                         
-                        <h5 class="fs-5">Api Key</h5>
-                        <div class="shadow p-3 mb-5 bg-white rounded w-50 position-relative">
-                            <div class="mb-2 position-relative">
-                                <section class="position-absolute h-auto p-2 d-inline-flex align-items-center" style="z-index: 100;right:20px;cursor: pointer;">
-                                    <i class="fa fa-eye" style="font-size: 20px;" onclick="showpas()"></i>
-                                </section>
-                                <input type="text" id="lihatapikey" class="form-control position-relative">
-                                <input type="hidden" value="awa" class="apakey">
-                            </div>
-                            <div class="p-1">
-                                <button class="btn btn-secondary text-white" onclick="copy()">Copy</button>
-                                <button class="btn btn-success text-white">Reset</button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -162,14 +162,14 @@
     <script src="{{ asset('js/sweetaalert.min.js') }}"></script>
 
     @include('sweetalert::alert')
+
     <script>
       let data = JSON.parse('<?php echo $api[0];?>',true);
       let dataa = JSON.parse('<?php echo $api[1];?>',true);
       document.getElementById('kredit').innerHTML = data.creditBalance;
       document.getElementById('gunakanapi').innerHTML = data.totalUsage;
-      let api = dataa.apiKey
-    // document.getElementById('lihatapikey').value = api;
-
+      let api = dataa.apiKey;
+      document.getElementById('lihatapikey').value = api;
     </script>
     
 </body>

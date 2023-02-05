@@ -94,10 +94,12 @@
                         if (is_array($datadb) || is_object($datadb)) {
                             foreach ($datadb as $key => $viewdata) {;?>
                             <input type="hidden" value="{{$viewdata->id}}" id="idalamat"/>
+                            <input type="hidden" id="titlelama" value="{{ $viewdata->title_judul}}">
+                            <input type="hidden" id="urllama" value="{{ $viewdata->url}}">
                              <div class="row">
                                 <div class="col-4 col-lg-4">
                                     <label class="form-label">Pilih Judul Url Baru</label>
-                                    <select class="form-control titlebaru" id="judul_title">
+                                    <select class="form-control titlebaru" id="judul_title" >
                                     </select>
                                 </div>
                                 <div class="col-4 col-lg-4">
@@ -120,9 +122,9 @@
                                 <input type="text" class="form-control" id="namaptbaru" value="{{ $viewdata->nama_perusahaan}}"/>
                             </div>
                             <div class="form-group mb-3">
-                                <textarea id="viewalamat" name="alamatbaru">{{html_entity_decode($viewdata->alamat)}}</textarea>
+                                <textarea id="viewalamat" name="viewalamat">{{html_entity_decode($viewdata->alamat)}}</textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary">Update Alamat</button>
+                            <button type="submit" class="btn btn-primary" id="hilangsub">Update Alamat</button>
                             <?php
                             }
                         } 
@@ -144,10 +146,11 @@
 
     <script>
         CKEDITOR.replace('viewalamat',{
-            width:'100%',
-            resize:true
+        width:'100%',
+        resize:true
         });
-        </script>
+        CKEDITOR.instances.viewalamat.updateElement();
+    </script>
 
     <script src="{{ asset('js/sweetaalert.min.js') }}"></script>
     

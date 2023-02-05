@@ -41,16 +41,6 @@
                 </div>
             </div>
             <div class="container mt-5">
-                @if (session()->has('message')) 
-                    <div class="mb-2 bg-success p-2 rounded text-white " style="font-size: 35px;">
-                        <p class="mt-1">Ganti Password Sukses,Silakan Login Kembali.</p>
-                        <script>
-                            setTimeout(() => {
-                                window.location="login";
-                            }, 3999);
-                        </script> 
-                    </div>
-                @endif
                 <form method="POST" enctype="multipart/form-data" class="form-horizontal form-material" action="update">
                     @csrf
 

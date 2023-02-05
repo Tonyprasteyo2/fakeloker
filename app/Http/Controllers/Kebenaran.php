@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\SendMail;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
@@ -54,7 +52,7 @@ class Kebenaran extends Controller
     }
 
     // dasboard 
-    public function Dasboard()
+    public function Dasboard(Request $request)
     {
         $title = "Dasboard";
         $totalVisit = DB::table('visitors')->select("*")->get();
@@ -70,9 +68,7 @@ class Kebenaran extends Controller
     public function Profil(Request $request)
     {
         $title = "Profil";
-        $session_id = $request->session()->start();
-        $data = DB::table('useradmins')->select("*")->where("id", '=', session_id())->get();
-        return view('masterweb.profil', compact("title", "data"));
+        return view('masterweb.profil', compact("title"));
     }
 
     // update user profil admin
@@ -104,6 +100,8 @@ class Kebenaran extends Controller
                             "password" => Hash::make($pass_baru),
                             "foto" => $namefoto,
                         ]);
+                        session()->regenerate();
+                        session()->flush();
                         return redirect()->back()->with('message', 'berhasil');
                     } else {
                         Alert::info('Gagal', 'Password Berupa Huruf Dan Angka !');
@@ -166,10 +164,8 @@ class Kebenaran extends Controller
         $status = $this->filterString($request->input("statusloker"));
         $alamat = $this->filterString(strtolower($request->input("alamat")));
         $alamatadd = str_replace(array('&', '<p>', '</p>', '*', '<script>', '</script>', ';', '<', '>'), array(''), $alamat);
-        $valid = Validator::make($request->all(),[
-            "alamat"=>'required|unique:alamat_perusahaans',
-        ]);
-        if ($valid->fails()) {
+        $valid =  DB::table('alamat_perusahaans')->where('alamat',$alamatadd)->count();
+        if ($valid >= 1) {
             return response()->json(["status" => 400]);
         }else {
             DB::table('alamat_perusahaans')->insert([
@@ -220,6 +216,31 @@ class Kebenaran extends Controller
         $alamatedit = $this->filterString(strtolower($request->input("alamatedit")));
         $statusedit = $this->filterString($request->input("status"));
         $alamatedithasil = str_replace(array('&', '<p>', '</p>', '*', '<script>', '</script>', ';', '<', '>'), array(''), $alamatedit);
+        $cek = DB::table('alamat_perusahaans')->where('alamat',$alamatedithasil)->count();
+        $urllama =  $this->filterString($request->input('urllama'));
+        $titlelama =  $this->filterString($request->input('titlelama'));
+        if ($cek >= 1) {
+            return response()->json(["status"=>300]);
+        }
+        if ($urledit == "" || $titleedit == "") {
+            DB::table('alamat_perusahaans')->where('id', $idalamat)->update([
+                "nama_perusahaan" => $editjudul,
+                "alamat" => $alamatedithasil,
+                "url" => $urllama,
+                "status" => $statusedit,
+                "title_judul" => $titlelama,
+            ]);
+            return response()->json(["status"=>200]);
+        } else {
+            DB::table('alamat_perusahaans')->where('id', $idalamat)->update([
+                "nama_perusahaan" => $editjudul,
+                "alamat" => $alamatedithasil,
+                "url" => $urledit,
+                "status" => $statusedit,
+                "title_judul" => $titleedit,
+            ]);
+            return response()->json(["status"=>200]);
+        }
         
     }
 
@@ -294,5 +315,20 @@ class Kebenaran extends Controller
         $api = curl_exec($ch);
         curl_close($ch);
         return json_encode($api);
+    }
+
+    public function Reset()
+    {
+        $ch = curl_init();
+        curl_setopt($ch,CURLOPT_URL,"https://api.serper.dev/users/reset-api-key");
+        curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"POST");
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($ch,CURLOPT_FOLLOWLOCATION,0);
+        curl_setopt($ch, CURLOPT_REFERER, 0);
+        curl_setopt($ch, CURLOPT_COOKIEFILE, 'assets/cookie.txt');
+        $tes = curl_exec($ch);
+        curl_close($ch);
+        return json_encode($tes);
+
     }
 }

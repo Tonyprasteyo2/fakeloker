@@ -104,7 +104,6 @@ public function AddUserNew(Request $request)
 
 
 
-
 $.ajax({
                 type: "post",
                 url: "addalamat",

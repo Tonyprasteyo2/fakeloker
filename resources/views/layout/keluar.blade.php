@@ -9,7 +9,7 @@
                 <h3>Apa anda ingin keluar ?</h3>
             </div>
             <div class="modal-footer">
-                <a class="btn btn-primary" href="logout">Keluar</a>
+                <a class="btn btn-primary" href="{{route('logout')}}">Keluar</a>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>

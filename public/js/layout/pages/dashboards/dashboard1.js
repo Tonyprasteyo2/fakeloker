@@ -272,13 +272,13 @@ const carigugel = (e) => {
     const token = $('meta[name="csrf-token"]').attr("content");
     e.preventDefault();
     let search = $(".ketik_gugel").val();
-    if (search !="") {
+    if (search != "") {
         $.ajax({
             type: "get",
-            url: '/search_gugel',
+            url: "/search_gugel",
             data: {
-                '_token': token,
-                'gugel': search
+                _token: token,
+                gugel: search,
             },
             dataType: "json",
             success: function (data) {
@@ -286,33 +286,48 @@ const carigugel = (e) => {
                 if (respon.statusCode == 403) {
                     let alertapi = document.getElementById("showalrtapiadd");
                     alertapi.classList.remove("d-none");
-                    alertapi.innerHTML="<h5 class='p-2 bg-info w-25 text-white mt-1'>Gagal Cari Silakan Cek Api Key Anda</h5>";
-                    document.querySelector('#judul_title').innerHTML += '<option value="no search">Silakan Coba kembali</option>';
-                    document.querySelector('#url_web_kebenaran').innerHTML += '<option value="no search">Silakan Coba kembali</option>';
-                }else{
+                    alertapi.innerHTML =
+                        "<h5 class='p-2 bg-info w-25 text-white mt-1'>Gagal Cari Silakan Cek Api Key Anda</h5>";
+                    document.querySelector("#judul_title").innerHTML +=
+                        '<option value="no search">Silakan Coba kembali</option>';
+                    document.querySelector("#url_web_kebenaran").innerHTML +=
+                        '<option value="no search">Silakan Coba kembali</option>';
+                } else {
                     let tes = [respon];
-                    tes.forEach(element => {
-                        let er = element['organic'];
+                    tes.forEach((element) => {
+                        let er = element["organic"];
                         for (let index = 1; index < er.length; index++) {
                             const site = er[index];
-                            document.querySelector('#judul_title').innerHTML += '<option value="' + site.title + '">"' + site.title + '"</option>';
-                            document.querySelector('#url_web_kebenaran').innerHTML += '<option value="' + site.link + '">' + site.link + '</option>';
+                            document.querySelector("#judul_title").innerHTML +=
+                                '<option value="' +
+                                site.title +
+                                '">"' +
+                                site.title +
+                                '"</option>';
+                            document.querySelector(
+                                "#url_web_kebenaran"
+                            ).innerHTML +=
+                                '<option value="' +
+                                site.link +
+                                '">' +
+                                site.link +
+                                "</option>";
                         }
                     });
                 }
-            }
+            },
         });
     } else {
-        document.getElementById("alert_search").innerHTML="<header class='bg-info p-1 rounded'><span onclick='tutupalertsearch()' style='cursor:pointer;' class='d-block'><i class='fas fa-times text-white' style='font-size:20px;'></i><p class='text-white d-inline-block position-relative' style='left:5px;font-size:20px;'>Harap Di isi Form Search</header>";
+        document.getElementById("alert_search").innerHTML =
+            "<header class='bg-info p-1 rounded'><span onclick='tutupalertsearch()' style='cursor:pointer;' class='d-block'><i class='fas fa-times text-white' style='font-size:20px;'></i><p class='text-white d-inline-block position-relative' style='left:5px;font-size:20px;'>Harap Di isi Form Search</header>";
     }
+};
 
-}
-
-const tutupalertsearch = ()=>{
+const tutupalertsearch = () => {
     setTimeout(() => {
         document.getElementById("alert_search").remove();
     }, 50);
-}
+};
 
 // add informasi alamat lowongan
 const addinformasi = (e) => {
@@ -322,197 +337,242 @@ const addinformasi = (e) => {
     let judulpt = $("#namapt").val();
     let statusLoker = $(".statuspt").val();
     const alamatpt = $(".alamatpt").val();
-    let Judulnamapt = judulpt.replace(/pt/g,"PT");
+    let Judulnamapt = judulpt.replace(/pt/g, "PT");
     ptname = [...new Set(Judulnamapt.split(" "))].join(" ");
-    ptname = ptname.split(" ").map(
-        (ptname)=> ptname.substring(0,1).toUpperCase() + ptname.slice(1)
-    ).join(" ");
-    if (statusLoker == "" || titlegugel == "" || judulpt  == "" ) {
+    ptname = ptname
+        .split(" ")
+        .map((ptname) => ptname.substring(0, 1).toUpperCase() + ptname.slice(1))
+        .join(" ");
+    if (statusLoker == "" || titlegugel == "" || judulpt == "") {
         Swal.fire({
             icon: "info",
             text: "Form Harus Terisii",
             timer: 2500,
-            showConfirmButton: false
+            showConfirmButton: false,
         });
-    }else if (statusLoker.match('[a-zA-Z]')) {
+    } else if (statusLoker.match("[a-zA-Z]")) {
         $.ajax({
             type: "post",
             url: "addalamat",
             data: {
                 _token: $('meta[name="csrf-token"]').attr("content"),
-                'judul': ptname,
-                'statusloker': statusLoker,
-                'alamat': alamatpt,
-                'titlelink': titlegugel,
-                'link': linkkebenaran,
+                judul: ptname,
+                statusloker: statusLoker,
+                alamat: alamatpt,
+                titlelink: titlegugel,
+                link: linkkebenaran,
             },
             dataType: "json",
             success: function (res) {
-                 if (res.status === 400) {
+                if (res.status === 400) {
                     Swal.fire({
                         icon: "info",
-                        text: "Alamat Sudah Ada",
+                        text: "Alamat Sudah Ada,Silakan Coba Kembali",
                         timer: 2500,
-                        showConfirmButton: false
+                        showConfirmButton: false,
                     });
-                    setTimeout(() => {
-                        location.reload();
-                    }, 3300);
-                }else{
+                } else {
                     Swal.fire({
                         icon: "success",
                         text: "Berhasil Add Alamat",
                         timer: 2500,
-                        showConfirmButton: false
+                        showConfirmButton: false,
                     });
-                    window.setTimeout( function(){
+                    window.setTimeout(function () {
                         window.location = "add";
-                    }, 3100 );
+                    }, 3100);
                 }
-            }
+            },
         });
-    }else{
+    } else {
         Swal.fire({
             icon: "danger",
             text: "Gagal add,Silakan coba kembali",
             timer: 2500,
-            showConfirmButton: false
+            showConfirmButton: false,
         });
     }
-    let tombol = document.getElementById('hilangsub');
-    tombol.addEventListener('click',function(){
-        tombol.parentNode.removeChild(tombol)
-    })
-}
+};
 
 // delete informasi
-const deleteinformasi = (id)=>{
-     $.ajax({
-         type: "delete",
-         url: "deletealamat/"+id,
-         data: {
-              _token: $('meta[name="csrf-token"]').attr("content"),
-             id:id,
-         },
-         dataType: "json",
-         success: function (response) {
+const deleteinformasi = (id) => {
+    $.ajax({
+        type: "delete",
+        url: "deletealamat/" + id,
+        data: {
+            _token: $('meta[name="csrf-token"]').attr("content"),
+            id: id,
+        },
+        dataType: "json",
+        success: function (response) {
             if (response.status == 200) {
                 Swal.fire({
                     icon: "success",
                     text: "Sukses Hapus Alamat",
                     timer: 2500,
-                    showConfirmButton: false
+                    showConfirmButton: false,
                 });
                 setTimeout(() => {
                     location.reload();
                 }, 3300);
             }
-         }
-     });
-}
+        },
+    });
+};
 
 // update informasi alamat
-$(".updateinformasialamat").submit(function (e) { 
+$(".updateinformasialamat").submit(function (e) {
     e.preventDefault();
     const id = document.getElementById("idalamat").value;
     let Titlebaru = document.getElementById("judul_title").value;
     let Urlbaru = document.getElementById("url_web_kebenaran").value;
     const Statusbaru = document.getElementsByClassName("statuspt")[0].value;
+    let urllama = document.getElementById("urllama").value;
+    let titlelama = document.getElementById("titlelama").value;
     if (Statusbaru.match("[a-zA-Z]")) {
-        let Namaperusahaanbaru = document.getElementById("namaptbaru").value.toLowerCase();
-       let pisahpt = [...new Set(Namaperusahaanbaru.split(" "))].join(" ");
-       let ptedit = pisahpt.replace(/pt/g,"PT");
-       let namaptedit = ptedit.split(" ").map(
-        (ptedit)=> ptedit.substring(0,1).toUpperCase() + ptedit.slice(1)
-       ).join(" ");
-       let alamatedit = document.getElementById("viewalamat").value;
-       if (namaptedit.match("[a-zA-Z]")) {
+        let Namaperusahaanbaru = document
+            .getElementById("namaptbaru")
+            .value.toLowerCase();
+        let pisahpt = [...new Set(Namaperusahaanbaru.split(" "))].join(" ");
+        let ptedit = pisahpt.replace(/pt/g, "PT");
+        let namaptedit = ptedit
+            .split(" ")
+            .map(
+                (ptedit) =>
+                    ptedit.substring(0, 1).toUpperCase() + ptedit.slice(1)
+            )
+            .join(" ");
+        let alamatedit = document.getElementById("viewalamat").value;
+        if (namaptedit.match("[a-zA-Z]")) {
             $.ajax({
                 type: "POST",
                 url: "/updatealamat",
                 data: {
                     _token: $('meta[name="csrf-token"]').attr("content"),
-                    "juduledit":namaptedit,
-                    "id":id,
-                    "titlebaru":Titlebaru,
-                    "urledit":Urlbaru,
-                    "alamatedit":alamatedit,
-                    "status":Statusbaru,
+                    juduledit: namaptedit,
+                    id: id,
+                    titlebaru: Titlebaru,
+                    urledit: Urlbaru,
+                    alamatedit: alamatedit,
+                    status: Statusbaru,
+                    urllama: urllama,
+                    titlelama: titlelama,
                 },
                 dataType: "json",
                 success: function (res) {
-                    if (res.status === "gagalform") {
-                        Swal.fire({
-                            icon: "warning",
-                            text: "Form Harus Terisi",
-                            timer: 2500,
-                            showConfirmButton: false
-                        });
-                    }else if (res.status === "sama") {
+                    if (res.status == 300) {
                         Swal.fire({
                             icon: "info",
-                            text: "Alamat Sudah Ada,Silakan coba kembali",
+                            text: "Alamat Sudah Ada,silakan coba kembali",
                             timer: 2500,
-                            showConfirmButton: false
+                            showConfirmButton: false,
                         });
-                    }else{
+                    } else {
                         Swal.fire({
                             icon: "success",
-                            text: "Berhasil Update Alamat",
+                            text: "Sukses Update Alamat",
                             timer: 2500,
-                            showConfirmButton: false
+                            showConfirmButton: false,
                         });
                         setTimeout(() => {
                             location.reload();
-                        }, 2500);
+                        }, 3300);
                     }
-                }
+                },
             });
-       } 
-    }else{
+        }
+    } else {
         Swal.fire({
             icon: "info",
             text: "Pilih Status Kebenaran",
             timer: 2500,
-            showConfirmButton: false
+            showConfirmButton: false,
         });
     }
 });
 
-
-const showapi = ()=>{
+const showapi = () => {
     $(".webapi").addClass("d-none");
-    document.getElementById("showwebapi").innerHTML = "<div class='container mx-auto p-2 w-50'><div class='alert alert-danger d-none' id='alertloginapi' role='alert'>Gagal,Silakan hubungin admin</div><h3 class='mb-3'>Login In Api<form method='POST' onsubmit='loginapikey(event);'><div class='form-floating mb-3 mt-3'><input type='email' class='form-control'placeholder='Masukan Email Anda' id='email'><label for='email'>Email</label></div><div class='form-floating mb-3 mt-3'><input type='text' class='form-control'placeholder='Masukan Password Anda' id='password'><label for='password'>Password</label></div><button type='submit' class='btn btn-primary'>Login Api</button</form></div>";
-}
+    document.getElementById("showwebapi").innerHTML =
+        "<div class='container mx-auto p-2 w-50'><div class='alert alert-danger d-none' id='alertloginapi' role='alert'>Gagal,Silakan hubungin admin</div><form method='POST' onsubmit='loginapikey(event);'><div class='form-floating mb-3 mt-3'><input type='email' class='form-control'placeholder='Masukan Email Anda' id='email'><label for='email'>Email</label></div><div class='form-floating mb-3 mt-3'><input type='text' class='form-control'placeholder='Masukan Password Anda' id='password'><label for='password'>Password</label></div><button type='submit' class='btn btn-primary'>Login Api</button</form></div>";
+};
 
-
-const loginapikey = (e)=>{
+const loginapikey = (e) => {
     e.preventDefault();
-    let emailapi = document.getElementById('email').value;
-    let pasapi = document.getElementById('password').value;
-    let token = $('meta[name="csrf-token"]').attr('content');
-    if (emailapi == "" || pasapi =="") {
-        console.log('a');
-    }else{
+    let emailapi = document.getElementById("email").value;
+    let pasapi = document.getElementById("password").value;
+    let token = $('meta[name="csrf-token"]').attr("content");
+    if (emailapi == "" || pasapi == "") {
+        console.log("a");
+    } else {
         $.ajax({
             type: "post",
             url: "/apiloginkey",
             data: {
-                'email':emailapi,
-                'password':pasapi,
-                '_token':token,
+                email: emailapi,
+                password: pasapi,
+                _token: token,
             },
             dataType: "json",
             success: function (res) {
                 let result = JSON.parse(res);
                 if (result.statusCode == 404) {
-                   document.getElementById('alertloginapi').classList.remove('d-none');
-                }else{
-                    document.getElementById('showwebapi').className = "d-none";
-                    let homeapi = document.getElementById('showwebapidata');
-                    homeapi.classList.remove('d-none');
+                    document
+                        .getElementById("alertloginapi")
+                        .classList.remove("d-none");
+                } else {
+                    document.getElementById("showwebapi").className = "d-none";
+                    let homeapi = document.getElementById("showwebapidata");
+                    homeapi.classList.remove("d-none");
                 }
-            }
+            },
         });
     }
+};
+
+const copy = () =>{
+    const txt = document.getElementById('lihatapikey');
+    txt.select();
+    document.execCommand("copy")
 }
+const showpas = () =>{
+    let showpas = document.getElementById('lihatapikey');
+    $(".fa").toggleClass("fa-eye-slash");
+    if (showpas.type === "password") {
+        showpas.type = "text";
+    }else{
+        showpas.type = "password";
+    }
+}
+
+$(".resetapi").on("click",function(e){
+    e.preventDefault();
+    $.ajax({
+        type: "post",
+        url: "reset",
+        data: {
+            "_token":$('meta[name="csrf-token"]').attr("content"),
+        },
+        dataType: "json",
+        success: function (res) {
+            let resultapi = JSON.parse(res);
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+              })
+              
+              Toast.fire({
+                icon: 'success',
+                title: 'Berhasil Reset Api',
+              })
+            document.getElementById('lihatapikey').value = resultapi.apiKey;
+        }
+    });
+})

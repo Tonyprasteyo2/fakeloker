@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" href="{{ asset('assets/img/kenali.png') }}" type="image/x-icon">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <title>Login</title>
 </head>
@@ -25,28 +26,33 @@
                     <h1 class="text-center p-3 text-6xl tracking-tighter " style="margin-top:-35px;">Welcome Back</h1>
                     <p class="text-center p-3 text-xl font-sans tracking-tighter " style="margin-top: -10px;">Nice to see again</p>
                 </div>
+                <div id="resetpas" class="hidden"></div>
+                <div id="carialamat" class="hidden"></div>
+                <div id="mode" class="hidden"></div>
                 <div class="p-2 d-block">
                     <div class="h-full flex items-center">
                         <div class="w-full p-5">
                             <h2 class="text-4xl mb-5">Login,</h2>
                             <div id="alert"></div>
-                            <form class="login">
-                                @csrf
-                                <div class="mb-4">
-                                    <label class="block text-lg font-bold mb-2" for="username">Email</label>
-                                    <input type="text" name="email" class="email shadow w-full border rounded px-3 appearance-none leading-tight focus:shadow-outline focus:outline-none py-2" placeholder="Masukan Email Anda" required />
-                                </div>
-                                <div class="mb-4">
-                                    <label class="block text-lg font-bold mb-2">Password</label>
-                                    <input id="password" type="password" name="password" class="password shadow w-full border rounded px-3 leading-tight focus:shadow-outline focus:outline-none py-2 appearance-none" placeholder="Masukan Password Anda" required />
-                                </div>
-                                <div class="flex items-center mb-4">
-                                    <input type="checkbox"  class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" onclick="show()">
-                                    <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300" >Show Password</label>
-                                </div>
-                                <button type="submit" class="login rounded bg-cyan-500 py-3 w-20 mt-1 text-xl tracking-wide leading-4 text-white">Login</button>
-                            </form>
-                            <img class="py-1 px-2 w-20 bg-cover right-0 absolute" src="{{ asset('assets/img/bulatindex.png') }}" />
+                            <div class="mb-3 sign">
+                                <form class="login">
+                                    <div class="mb-4">
+                                        <label class="block text-lg font-bold mb-2" for="email">Email</label>
+                                        <input type="text" name="email" class="email shadow w-full border rounded px-3 appearance-none leading-tight focus:shadow-outline focus:outline-none py-2" placeholder="Masukan Email Anda" required />
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="block text-lg font-bold mb-2">Password</label>
+                                        <input id="password" type="password" name="password" class="password shadow w-full border rounded px-3 leading-tight focus:shadow-outline focus:outline-none py-2 appearance-none" placeholder="Masukan Password Anda" required />
+                                    </div>
+                                    <div class="flex items-center mb-4">
+                                        <input type="checkbox"  class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" onclick="show()">
+                                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300" >Show Password</label>
+                                    </div>
+                                    <button type="submit" class="login capitalize bg-cyan-500 p-2 w-auto text-white rounded leading-4 text-base font-ubuntu">Login</button>
+                                    <a class="capitalize bg-lime-500 p-2 w-auto text-white rounded leading-4 text-base font-ubuntu" href="{{route("reset")}}">reset password</a>
+                                </form>
+                            </div>
+                            <img class="py-1 px-2 w-20 bg-cover right-0 absolute bulatlogin" src="{{ asset('assets/img/bulatindex.png') }}" />
                         </div>
                     </div>
                 </div>

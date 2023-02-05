@@ -126,7 +126,7 @@
         width:'100%',
         resize:true
     });
-    CKEDITOR.instances.alamatpt.setData("isi alamat anda");
+    CKEDITOR.instances.alamatpt.setData("isi alamat anda"); 
     CKEDITOR.instances.alamatpt.updateElement();
     </script>
     

@@ -29,6 +29,6 @@ class SendMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Pergantian Akun Member')->view('layout.letter');
+        return $this->subject('Reset Akun')->view('layout.letter');
     }
 }
