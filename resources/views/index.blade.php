@@ -60,13 +60,13 @@
                                 <img src="{{ asset('assets/img/fake.png') }}" alt="gambar" class="p-1 w-full pl-9 object-center object-cover block md:hidden " >
                                 <header class="relative top-[-96px] md:top-0">
                                     <div class=" block md:flex items-center h-96">
-                                        <h1 class="text-center tracking-wide font-bebas leading-9 text-sm md:text-2xl uppercase">kebenaran lowongan kerja adalah untuk mengecek atau validasi sebuah alamat perusahaan yang sedang membuka lowongan kerja.</h1>
-                                        <div class="absolute w-full overflow-hidden top-44 md:top-56 lg:top-56 sm:top-24">
+                                        <h1 class="text-center tracking-wide font-roboto leading-9 text-sm 2xl:text-2xl xl:text-xl md:text-xl uppercase">kebenaran lowongan kerja adalah untuk mengecek atau validasi sebuah alamat perusahaan yang sedang membuka lowongan kerja.</h1>
+                                        <div class="absolute w-full overflow-hidden top-44 md:top-56 lg:top-56 sm:top-44">
                                             <a href="#cek" class="bg-sky-400 cursor-pointer p-2 w-80 rounded h-11 text-center mx-auto block md:text-xl text-base font-popin text-white mt-10">Cek Kebenaran Alamat Loker</a>
                                         </div>
                                     </div>
                                     <header class="flex justify-end relative top-[-50px] lg:top-24  sm:top-[-200px] mb-10">
-                                        <img src="{{asset('assets/img/bulatindex.png')}}" alt="gambar" class="h-20 ">
+                                        <img src="{{asset('assets/img/bulatindex.png')}}" alt="gambar" class="h-20 block 2xl:block lg:hidden md:hidden">
                                     </header>
                                 </header>
                             </div>
@@ -241,7 +241,7 @@
                                     </div>
                                   </div>
                                   <div class="p-2 w-full">
-                                    <button class="flex  text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Kirim</button>
+                                    <button class="flex text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Kirim</button>
                                   </div>
                                 </div>
                               </div>
